@@ -1,0 +1,25 @@
+@import './node_modules/classui/sass/main';
+
+
+@mixin customStyling() {
+	&.classbook {
+		
+		@import 'home';
+	}
+}
+
+
+@include classui_theme("flat") {
+	@include customStyling();
+};
+
+@include classui_theme("fb") {
+	@include customStyling();
+};
+
+
+// Normal styling independent of theme can go here :)
+
+.classbook {
+	
+}

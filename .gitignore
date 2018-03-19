@@ -1,0 +1,9 @@
+getupdate.sh
+production_node_modules
+node_modules
+yarn-error.log
+yarn.lock
+.vscode
+
+bundle/*
+!bundle/classbook.css

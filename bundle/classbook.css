@@ -1,0 +1,1207 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline; }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+html, body {
+  min-height: 100%;
+  min-width: 100%;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  overflow: auto;
+  margin: 0px; }
+
+html {
+  height: 100%;
+  line-height: 1.4; }
+
+input[type='text'], input[type='text']:focus, input[type='password'], input[type='password']:focus, textarea, textarea:focus {
+  border: 0px;
+  outline: 0px;
+  resize: none; }
+
+a, a:active, a:hover {
+  color: black;
+  text-decoration: none; }
+
+h1 {
+  font-size: 36px; }
+
+h2 {
+  font-size: 30px; }
+
+h3 {
+  font-size: 24px; }
+
+h4 {
+  font-size: 18px; }
+
+/* Won't be used here */
+h5 {
+  font-size: 14px; }
+
+h6 {
+  font-size: 12px; }
+
+b {
+  font-weight: 900; }
+
+i {
+  font-style: italic; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 5px;
+  margin-bottom: 5px; }
+
+.flexbox {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-align-content: flex-start;
+  align-content: flex-start;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: stretch;
+  align-items: stretch; }
+  .flexbox > * {
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto; }
+  .flexbox.spread > * {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto; }
+  .flexbox > .remain {
+    -webkit-flex: 1 1 0;
+    flex: 1 1 0;
+    overflow: auto; }
+  .flexbox.inline {
+    display: -webkit-inline;
+    display: inline; }
+  .flexbox.column {
+    -webkit-flex-direction: column;
+    flex-direction: column; }
+  .flexbox.wrap {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  .flexbox.justify-start {
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start; }
+  .flexbox.justify-end {
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end; }
+  .flexbox.justify-center {
+    -webkit-justify-content: center;
+    justify-content: center; }
+  .flexbox.justify-space-between {
+    -webkit-justify-content: space-between;
+    justify-content: space-between; }
+  .flexbox.justify-space-around {
+    -webkit-justify-content: space-around;
+    justify-content: space-around; }
+  .flexbox.align-start {
+    -webkit-align-items: flex-start;
+    align-items: flex-start; }
+  .flexbox.align-end {
+    -webkit-align-items: flex-end;
+    align-items: flex-end; }
+  .flexbox.align-center {
+    -webkit-align-items: center;
+    align-items: center; }
+  .flexbox.align-stretch {
+    -webkit-align-items: stretch;
+    align-items: stretch; }
+
+.classui {
+  background-color: #ECECEC; }
+
+.classui.flat {
+  position: relative; }
+  .classui.flat.fullheight {
+    min-height: 100vh; }
+  .classui.flat .hoverable_grey_component, .classui.flat .actionable_grey_component, .classui.flat .__button, .classui.flat input[type='button'], .classui.flat input[type='submit'], .classui.flat button, .classui.flat .__dropdown > ul li, .classui.flat .__sidemenu > .item, .classui.flat .classui.fb button, .classui.fb .classui.flat button, .classui.flat .classui.fb .__dropdown > ul li, .classui.fb .__dropdown > ul .classui.flat li, .classui.flat .classui.fb .__sidemenu > .item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.flat .hoverable_grey_component:hover, .classui.flat .actionable_grey_component:hover, .classui.flat .__button:hover, .classui.flat input[type='button']:hover, .classui.flat input[type='submit']:hover, .classui.flat button:hover, .classui.flat .__dropdown > ul li:hover, .classui.flat .__sidemenu > .item:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb .__dropdown > ul li:hover, .classui.fb .__dropdown > ul .classui.flat li:hover, .classui.flat .classui.fb .__sidemenu > .item:hover {
+      background-color: #DDDDDD; }
+    .classui.flat .hoverable_grey_component.active, .classui.flat .active.actionable_grey_component, .classui.flat .active.__button, .classui.flat input.active[type='button'], .classui.flat input.active[type='submit'], .classui.flat button.active, .classui.flat .__dropdown > ul li.active, .classui.flat .__sidemenu > .active.item, .classui.flat .classui.fb button.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb .__dropdown > ul li.active, .classui.fb .__dropdown > ul .classui.flat li.active, .classui.flat .classui.fb .__sidemenu > .active.item {
+      background-color: #CCCCCC; }
+    .classui.flat .hoverable_grey_component.disable, .classui.flat .disable.actionable_grey_component, .classui.flat .disable.__button, .classui.flat input.disable[type='button'], .classui.flat input.disable[type='submit'], .classui.flat button.disable, .classui.flat .__dropdown > ul li.disable, .classui.flat .__sidemenu > .disable.item, .classui.flat .classui.fb button.disable, .classui.fb .classui.flat button.disable, .classui.flat .classui.fb .__dropdown > ul li.disable, .classui.fb .__dropdown > ul .classui.flat li.disable, .classui.flat .classui.fb .__sidemenu > .disable.item, .classui.flat .hoverable_grey_component.disable:hover, .classui.flat .disable.actionable_grey_component:hover, .classui.flat .disable.__button:hover, .classui.flat input.disable[type='button']:hover, .classui.flat input.disable[type='submit']:hover, .classui.flat button.disable:hover, .classui.flat .__dropdown > ul li.disable:hover, .classui.flat .__sidemenu > .disable.item:hover, .classui.flat .classui.fb button.disable:hover, .classui.fb .classui.flat button.disable:hover, .classui.flat .classui.fb .__dropdown > ul li.disable:hover, .classui.fb .__dropdown > ul .classui.flat li.disable:hover, .classui.flat .classui.fb .__sidemenu > .disable.item:hover, .classui.flat .hoverable_grey_component.disable:active, .classui.flat .disable.actionable_grey_component:active, .classui.flat .disable.__button:active, .classui.flat input.disable[type='button']:active, .classui.flat input.disable[type='submit']:active, .classui.flat button.disable:active, .classui.flat .__dropdown > ul li.disable:active, .classui.flat .__sidemenu > .disable.item:active, .classui.flat .classui.fb button.disable:active, .classui.fb .classui.flat button.disable:active, .classui.flat .classui.fb .__dropdown > ul li.disable:active, .classui.fb .__dropdown > ul .classui.flat li.disable:active, .classui.flat .classui.fb .__sidemenu > .disable.item:active, .classui.flat .hoverable_grey_component.disable.active, .classui.flat .disable.active.actionable_grey_component, .classui.flat .disable.active.__button, .classui.flat input.disable.active[type='button'], .classui.flat input.disable.active[type='submit'], .classui.flat button.disable.active, .classui.flat .__dropdown > ul li.disable.active, .classui.flat .__sidemenu > .disable.active.item, .classui.flat .classui.fb button.disable.active, .classui.fb .classui.flat button.disable.active, .classui.flat .classui.fb .__dropdown > ul li.disable.active, .classui.fb .__dropdown > ul .classui.flat li.disable.active, .classui.flat .classui.fb .__sidemenu > .disable.active.item {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.flat .actionable_grey_component:hover, .classui.flat .__button:hover, .classui.flat input[type='button']:hover, .classui.flat input[type='submit']:hover, .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat button:hover {
+    background-color: #CCCCCC; }
+  .classui.flat .actionable_grey_component:active, .classui.flat .__button:active, .classui.flat input[type='button']:active, .classui.flat input[type='submit']:active, .classui.flat button:active, .classui.flat .classui.fb button:active, .classui.fb .classui.flat button:active, .classui.flat .actionable_grey_component.active, .classui.flat .active.__button, .classui.flat input.active[type='button'], .classui.flat input.active[type='submit'], .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .classui.flat button.active {
+    background-color: #BBBBBB; }
+  .classui.flat .hoverable_component, .classui.flat .actionable_component, .classui.flat .__button.primary, .classui.flat input[type='button'].primary, .classui.flat input[type='submit'].primary, .classui.flat button.primary {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.flat .hoverable_component:hover, .classui.flat .actionable_component:hover, .classui.flat .__button.primary:hover, .classui.flat input[type='button'].primary:hover, .classui.flat input[type='submit'].primary:hover, .classui.flat button.primary:hover, .classui.flat .hoverable_component.active, .classui.flat .active.actionable_component, .classui.flat .active.__button.primary, .classui.flat input.active[type='button'].primary, .classui.flat input.active[type='submit'].primary, .classui.flat button.active.primary {
+      background-color: #27a15a;
+      color: white; }
+    .classui.flat .hoverable_component.disable, .classui.flat .disable.actionable_component, .classui.flat .disable.__button.primary, .classui.flat input.disable[type='button'].primary, .classui.flat input.disable[type='submit'].primary, .classui.flat button.disable.primary, .classui.flat .hoverable_component.disable:hover, .classui.flat .disable.actionable_component:hover, .classui.flat .disable.__button.primary:hover, .classui.flat input.disable[type='button'].primary:hover, .classui.flat input.disable[type='submit'].primary:hover, .classui.flat button.disable.primary:hover, .classui.flat .hoverable_component.disable:active, .classui.flat .disable.actionable_component:active, .classui.flat .disable.__button.primary:active, .classui.flat input.disable[type='button'].primary:active, .classui.flat input.disable[type='submit'].primary:active, .classui.flat button.disable.primary:active, .classui.flat .hoverable_component.disable.active, .classui.flat .disable.active.actionable_component, .classui.flat .disable.active.__button.primary, .classui.flat input.disable.active[type='button'].primary, .classui.flat input.disable.active[type='submit'].primary, .classui.flat button.disable.active.primary {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.flat .actionable_component:active, .classui.flat .__button.primary:active, .classui.flat input[type='button'].primary:active, .classui.flat input[type='submit'].primary:active, .classui.flat button.primary:active {
+    background-color: #217a45;
+    color: white; }
+  .classui.flat .inline-block {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline; }
+  .classui.flat .noTextWrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+  .classui.flat .successColor {
+    color: #27a15a; }
+  .classui.flat .errorColor {
+    color: #c0392b; }
+  .classui.flat .__button, .classui.flat input[type='button'], .classui.flat input[type='submit'], .classui.flat button {
+    padding: 10px;
+    background-color: #DDDDDD;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+    .classui.flat .__button.flat, .classui.flat input[type='button'].flat, .classui.flat input[type='submit'].flat, .classui.flat button.flat {
+      background-color: inherit; }
+    .classui.flat .__button.disable, .classui.flat .__button.disable:hover, .classui.flat .__button.disable:active, .classui.flat input[type='button'].disable, .classui.flat input[type='button'].disable:hover, .classui.flat input[type='button'].disable:active, .classui.flat input[type='submit'].disable, .classui.flat input[type='submit'].disable:hover, .classui.flat input[type='submit'].disable:active, .classui.flat button.disable, .classui.flat button.disable:hover, .classui.flat button.disable:active {
+      background-color: #DDDDDD !important; }
+    .classui.flat .__button, .classui.flat .__button:hover, .classui.flat .__button:active, .classui.flat input[type='button'], .classui.flat input[type='button']:hover, .classui.flat input[type='button']:active, .classui.flat input[type='submit'], .classui.flat input[type='submit']:hover, .classui.flat input[type='submit']:active, .classui.flat button, .classui.flat button:hover, .classui.flat button:active {
+      border-width: 0px;
+      outline-width: 0px; }
+  .classui.flat .__dropdown {
+    position: relative;
+    z-index: 5;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline; }
+    .classui.flat .__dropdown.push-left ul {
+      right: 0px; }
+    .classui.flat .__dropdown.push-right ul {
+      left: 0px; }
+    .classui.flat .__dropdown.push-up ul {
+      top: auto;
+      bottom: 100%; }
+    .classui.flat .__dropdown > ul {
+      position: absolute;
+      background-color: white;
+      color: black;
+      top: 100%;
+      max-width: 200px;
+      min-width: 150px; }
+      .classui.flat .__dropdown > ul li {
+        padding: 10px; }
+  .classui.flat .__badge {
+    padding: 7px 10px;
+    cursor: default;
+    color: white;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s; }
+    .classui.flat .__badge, .classui.flat .__badge.success {
+      background-color: #27AE60; }
+    .classui.flat .__badge.error {
+      background-color: #E74C3C; }
+    .classui.flat .__badge.sunflower {
+      background-color: #F1C404; }
+    .classui.flat .__badge.carrot {
+      background-color: #E67E22; }
+    .classui.flat .__badge.grey {
+      background-color: #95A5A6; }
+  .classui.flat .__navbar {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 3px;
+    background-color: #27a15a;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s; }
+    .classui.flat .__navbar.dummy {
+      opacity: 0; }
+    .classui.flat .__navbar.light {
+      background-color: white; }
+      .classui.flat .__navbar.light > .content > .logo {
+        color: #27a15a;
+        text-shadow: 0px 0px 10px #27a15a, 0px 0px 10px #27a15a; }
+        .classui.flat .__navbar.light > .content > .logo:hover {
+          text-shadow: 0px 0px 10px #27a15a, 0px 0px 10px #27a15a, 0px 0px 10px #27a15a; }
+      .classui.flat .__navbar.light > .content .button {
+        color: #27a15a;
+        background-color: inherit; }
+        .classui.flat .__navbar.light > .content .button:hover, .classui.flat .__navbar.light > .content .button:active, .classui.flat .__navbar.light > .content .button.active {
+          background-color: #e6e6e6; }
+    .classui.flat .__navbar > .content {
+      max-width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex-grow: 0;
+      flex-grow: 0;
+      margin: auto;
+      height: 100%;
+      color: white; }
+      .classui.flat .__navbar > .content > .logo {
+        cursor: default;
+        padding: 0px 7px;
+        font-size: 20px;
+        text-shadow: 0px 0px 15px white, 0px 0px 15px white;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s; }
+        .classui.flat .__navbar > .content > .logo::first-letter {
+          font-size: 30px; }
+        .classui.flat .__navbar > .content > .logo:hover {
+          text-shadow: 0px 0px 15px white, 0px 0px 15px white, 0px 0px 15px white; }
+      .classui.flat .__navbar > .content > .remain {
+        -webkit-flex-grow: 1;
+        flex-grow: 1; }
+      .classui.flat .__navbar > .content .__button {
+        background-color: inherit; }
+        .classui.flat .__navbar > .content .__button.disable, .classui.flat .__navbar > .content .__button.disable:active, .classui.flat .__navbar > .content .__button.disable.active {
+          background-color: inherit !important;
+          color: #b3b3b3; }
+        .classui.flat .__navbar > .content .__button:hover, .classui.flat .__navbar > .content .__button:active, .classui.flat .__navbar > .content .__button.active {
+          background-color: #217a45; }
+  .classui.flat .__input, .classui.flat input[type='text'], .classui.flat input[type='number'], .classui.flat input[type='password'], .classui.flat textarea {
+    background-color: inherit;
+    font-size: 15px;
+    border-width: 0px;
+    outline-width: 0px;
+    width: 100%;
+    border-bottom: 2px solid #DFDFDF;
+    color: black;
+    padding: 5px 0px;
+    padding-bottom: 4px;
+    margin: 0px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+    .classui.flat .__input:focus, .classui.flat input[type='text']:focus, .classui.flat input[type='number']:focus, .classui.flat input[type='password']:focus, .classui.flat textarea:focus {
+      border-bottom: 2px solid black;
+      outline-width: 0px; }
+  .classui.flat label.__input_checkbox, .classui.flat label.__input_radio {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 5px; }
+    .classui.flat label.__input_checkbox.inline, .classui.flat label.__input_radio.inline {
+      display: -webkit-inline-flex;
+      display: inline-flex;
+      padding-right: 10px;
+      margin-right: 5px; }
+    .classui.flat label.__input_checkbox:hover, .classui.flat label.__input_radio:hover {
+      background-color: #F4F4F4; }
+    .classui.flat label.__input_checkbox > input[type='checkbox'], .classui.flat label.__input_checkbox > input[type='radio'], .classui.flat label.__input_radio > input[type='checkbox'], .classui.flat label.__input_radio > input[type='radio'] {
+      display: none; }
+      .classui.flat label.__input_checkbox > input[type='checkbox']:checked ~ .fake, .classui.flat label.__input_checkbox > input[type='radio']:checked ~ .fake, .classui.flat label.__input_radio > input[type='checkbox']:checked ~ .fake, .classui.flat label.__input_radio > input[type='radio']:checked ~ .fake {
+        border: 1px solid #217a45;
+        background-color: #27a15a; }
+      .classui.flat label.__input_checkbox > input[type='checkbox']:focus ~ .fake, .classui.flat label.__input_checkbox > input[type='radio']:focus ~ .fake, .classui.flat label.__input_radio > input[type='checkbox']:focus ~ .fake, .classui.flat label.__input_radio > input[type='radio']:focus ~ .fake {
+        -webkit-box-shadow: 0 0px 10px grey;
+        -moz-box-shadow: 0 0px 10px grey;
+        box-shadow: 0 0px 10px grey; }
+    .classui.flat label.__input_checkbox > input[type='radio'] ~ .fake, .classui.flat label.__input_radio > input[type='radio'] ~ .fake {
+      border-radius: 10px; }
+    .classui.flat label.__input_checkbox > .fake, .classui.flat label.__input_radio > .fake {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 17px;
+      height: 17px;
+      margin-right: 10px;
+      border: 1px solid black;
+      font-size: 15px;
+      color: white;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+  .classui.flat .__input_select {
+    position: relative;
+    display: block; }
+    .classui.flat .__input_select > .input {
+      cursor: pointer;
+      color: transparent;
+      text-shadow: 0px 0px 0px #000;
+      background-color: white; }
+    .classui.flat .__input_select > .suggestions {
+      position: absolute;
+      top: 0px;
+      bottom: auto;
+      padding: 10px 0px;
+      background-color: white;
+      width: 100%;
+      max-height: 300px;
+      overflow: auto;
+      box-shadow: 0px 0px 3px grey; }
+      .classui.flat .__input_select > .suggestions > span {
+        display: block;
+        cursor: pointer;
+        padding: 7px 10px; }
+        .classui.flat .__input_select > .suggestions > span:hover {
+          background-color: #27a15a;
+          color: white; }
+        .classui.flat .__input_select > .suggestions > span.active, .classui.flat .__input_select > .suggestions > span.active:hover {
+          background-color: inherit;
+          color: #27a15a;
+          cursor: default; }
+    .classui.flat .__input_select.top > .suggestions {
+      top: auto;
+      bottom: 0px; }
+    .classui.flat .__input_select.editable > .input {
+      color: black;
+      padding: 7px 0px;
+      cursor: text; }
+      .classui.flat .__input_select.editable > .input:focus {
+        cursor: auto;
+        padding-left: 10px; }
+      .classui.flat .__input_select.editable > .input:hover {
+        border-bottom: 2px solid black; }
+    .classui.flat .__input_select.editable > .suggestions {
+      top: 100%;
+      bottom: auto; }
+    .classui.flat .__input_select.editable.top > .suggestions {
+      top: auto;
+      bottom: 100%; }
+  .classui.flat .__input_layout {
+    display: block;
+    margin-bottom: 5px; }
+    .classui.flat .__input_layout > .label {
+      font-size: 13px; }
+    .classui.flat .__input_layout > .error {
+      max-height: 0px;
+      overflow: hidden;
+      opacity: 0;
+      padding: 5px 0px;
+      font-size: 13px;
+      color: #ff1744;
+      -webkit-transition: max-height 0.5s;
+      -moz-transition: max-height 0.5s;
+      -o-transition: max-height 0.5s;
+      transition: max-height 0.5s; }
+    .classui.flat .__input_layout.error > input[type="text"], .classui.flat .__input_layout.error input[type='number'], .classui.flat .__input_layout.error input[type='password'], .classui.flat .__input_layout.error textarea {
+      border-bottom: 2px solid #c0392b; }
+    .classui.flat .__input_layout.error > .label {
+      color: #ff1744; }
+    .classui.flat .__input_layout.error > .error {
+      text-transform: capitalize;
+      max-height: 50px;
+      overflow-wrap: break-word;
+      opacity: 1; }
+    .classui.flat .__input_layout.success > input[type="text"], .classui.flat .__input_layout.success input[type='number'], .classui.flat .__input_layout.success input[type='password'], .classui.flat .__input_layout.success textarea {
+      border-bottom: 2px solid #217a45; }
+    .classui.flat .__input_layout.success > .label {
+      color: #217a45; }
+  .classui.flat .__flash {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); }
+    .classui.flat .__flash.noDismiss {
+      background-color: rgba(0, 0, 0, 0.8); }
+    .classui.flat .__flash > .content {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto; }
+      .classui.flat .__flash > .content > .close {
+        font-weight: 900;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 10px;
+        min-width: 40px;
+        min-height: 40px; }
+  .classui.flat .__drawer {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); }
+    .classui.flat .__drawer > .content > .close {
+      left: 0px; }
+    .classui.flat .__drawer.noDismiss {
+      background-color: rgba(0, 0, 0, 0.8); }
+    .classui.flat .__drawer.left {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: left;
+      justify-content: left;
+      -webkit-align-items: center;
+      align-items: center; }
+      .classui.flat .__drawer.left > .content > .close {
+        right: 0px; }
+    .classui.flat .__drawer > .content {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto; }
+      .classui.flat .__drawer > .content > .close {
+        font-weight: 900;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        padding: 10px;
+        min-width: 40px; }
+  .classui.flat .__feedback {
+    position: fixed;
+    top: 0px;
+    left: 50%; }
+    .classui.flat .__feedback > .content {
+      display: -moz-inline-stack;
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      zoom: 1;
+      *display: inline;
+      position: relative;
+      right: 50%;
+      padding: 15px;
+      min-width: 200px;
+      text-align: center; }
+      .classui.flat .__feedback > .content.error {
+        background-color: #ffdfdf;
+        color: #c90000;
+        font-weight: 900; }
+      .classui.flat .__feedback > .content.success {
+        background-color: #d4ffd4;
+        color: #007700;
+        font-weight: 900; }
+  .classui.flat .__sidemenu {
+    border: 1px solid #DDDDDD;
+    background-color: white;
+    padding: 10px 0px; }
+    .classui.flat .__sidemenu > .header {
+      padding: 0px 10px; }
+    .classui.flat .__sidemenu > .divider {
+      border-top: 1px solid grey;
+      margin: 10px 5px; }
+    .classui.flat .__sidemenu > .item {
+      padding: 7px 10px; }
+      .classui.flat .__sidemenu > .item > .badge {
+        color: red;
+        font-size: 80%;
+        font-weight: 900; }
+  .classui.flat .__table {
+    display: table;
+    background-color: white;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%; }
+    .classui.flat .__table > thead > tr {
+      font-weight: 900; }
+      .classui.flat .__table > thead > tr > th {
+        cursor: pointer;
+        opacity: 0.7;
+        text-transform: capitalize; }
+        .classui.flat .__table > thead > tr > th:hover {
+          background-color: rgba(0, 0, 0, 0.01);
+          opacity: 1; }
+    .classui.flat .__table.hoverable > tbody > tr:hover {
+      background-color: whitesmoke; }
+    .classui.flat .__table > tbody tr {
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+    .classui.flat .__table > tbody > tr.active:hover, .classui.flat .__table > tbody > tr.active {
+      background-color: #27a15a;
+      color: white; }
+    .classui.flat .__table > thead > tr, .classui.flat .__table > tbody > tr {
+      border-bottom: 1px solid #CACACA;
+      text-align: left; }
+      .classui.flat .__table > thead > tr > td, .classui.flat .__table > thead > tr > th, .classui.flat .__table > tbody > tr > td, .classui.flat .__table > tbody > tr > th {
+        padding: 7px 17px; }
+  .classui.flat .__card._0 {
+    border: 1px solid #DDDDDD; }
+  .classui.flat .__card._1 {
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .classui.flat .__card._2 {
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .classui.flat .__card._3 {
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+  .classui.flat .__card._4 {
+    -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  .classui.flat .__card._5 {
+    -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+  .classui.flat .__navbar {
+    z-index: 10; }
+  .classui.flat .__flash {
+    z-index: 15; }
+  .classui.flat .__drawer {
+    z-index: 15; }
+  .classui.flat .__feedback {
+    z-index: 20; }
+  .classui.flat .classui > .mainContent {
+    z-index: 5; }
+  .classui.flat .hoverable_grey_component, .classui.flat .actionable_grey_component, .classui.flat .__button, .classui.flat input[type='button'], .classui.flat input[type='submit'], .classui.flat button, .classui.flat .__dropdown > ul li, .classui.flat .__sidemenu > .item, .classui.flat .classui.fb button, .classui.fb .classui.flat button, .classui.flat .classui.fb .__dropdown > ul li, .classui.fb .__dropdown > ul .classui.flat li, .classui.flat .classui.fb .__sidemenu > .item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.flat .hoverable_grey_component:hover, .classui.flat .actionable_grey_component:hover, .classui.flat .__button:hover, .classui.flat input[type='button']:hover, .classui.flat input[type='submit']:hover, .classui.flat button:hover, .classui.flat .__dropdown > ul li:hover, .classui.flat .__sidemenu > .item:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb .__dropdown > ul li:hover, .classui.fb .__dropdown > ul .classui.flat li:hover, .classui.flat .classui.fb .__sidemenu > .item:hover {
+      background-color: #DDDDDD; }
+    .classui.flat .hoverable_grey_component.active, .classui.flat .active.actionable_grey_component, .classui.flat .active.__button, .classui.flat input.active[type='button'], .classui.flat input.active[type='submit'], .classui.flat button.active, .classui.flat .__dropdown > ul li.active, .classui.flat .__sidemenu > .active.item, .classui.flat .classui.fb button.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb .__dropdown > ul li.active, .classui.fb .__dropdown > ul .classui.flat li.active, .classui.flat .classui.fb .__sidemenu > .active.item {
+      background-color: #CCCCCC; }
+    .classui.flat .hoverable_grey_component.disable, .classui.flat .disable.actionable_grey_component, .classui.flat .disable.__button, .classui.flat input.disable[type='button'], .classui.flat input.disable[type='submit'], .classui.flat button.disable, .classui.flat .__dropdown > ul li.disable, .classui.flat .__sidemenu > .disable.item, .classui.flat .classui.fb button.disable, .classui.fb .classui.flat button.disable, .classui.flat .classui.fb .__dropdown > ul li.disable, .classui.fb .__dropdown > ul .classui.flat li.disable, .classui.flat .classui.fb .__sidemenu > .disable.item, .classui.flat .hoverable_grey_component.disable:hover, .classui.flat .disable.actionable_grey_component:hover, .classui.flat .disable.__button:hover, .classui.flat input.disable[type='button']:hover, .classui.flat input.disable[type='submit']:hover, .classui.flat button.disable:hover, .classui.flat .__dropdown > ul li.disable:hover, .classui.flat .__sidemenu > .disable.item:hover, .classui.flat .classui.fb button.disable:hover, .classui.fb .classui.flat button.disable:hover, .classui.flat .classui.fb .__dropdown > ul li.disable:hover, .classui.fb .__dropdown > ul .classui.flat li.disable:hover, .classui.flat .classui.fb .__sidemenu > .disable.item:hover, .classui.flat .hoverable_grey_component.disable:active, .classui.flat .disable.actionable_grey_component:active, .classui.flat .disable.__button:active, .classui.flat input.disable[type='button']:active, .classui.flat input.disable[type='submit']:active, .classui.flat button.disable:active, .classui.flat .__dropdown > ul li.disable:active, .classui.flat .__sidemenu > .disable.item:active, .classui.flat .classui.fb button.disable:active, .classui.fb .classui.flat button.disable:active, .classui.flat .classui.fb .__dropdown > ul li.disable:active, .classui.fb .__dropdown > ul .classui.flat li.disable:active, .classui.flat .classui.fb .__sidemenu > .disable.item:active, .classui.flat .hoverable_grey_component.disable.active, .classui.flat .disable.active.actionable_grey_component, .classui.flat .disable.active.__button, .classui.flat input.disable.active[type='button'], .classui.flat input.disable.active[type='submit'], .classui.flat button.disable.active, .classui.flat .__dropdown > ul li.disable.active, .classui.flat .__sidemenu > .disable.active.item, .classui.flat .classui.fb button.disable.active, .classui.fb .classui.flat button.disable.active, .classui.flat .classui.fb .__dropdown > ul li.disable.active, .classui.fb .__dropdown > ul .classui.flat li.disable.active, .classui.flat .classui.fb .__sidemenu > .disable.active.item {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.flat .actionable_grey_component:hover, .classui.flat .__button:hover, .classui.flat input[type='button']:hover, .classui.flat input[type='submit']:hover, .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat button:hover {
+    background-color: #CCCCCC; }
+  .classui.flat .actionable_grey_component:active, .classui.flat .__button:active, .classui.flat input[type='button']:active, .classui.flat input[type='submit']:active, .classui.flat button:active, .classui.flat .classui.fb button:active, .classui.fb .classui.flat button:active, .classui.flat .actionable_grey_component.active, .classui.flat .active.__button, .classui.flat input.active[type='button'], .classui.flat input.active[type='submit'], .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .classui.flat button.active {
+    background-color: #BBBBBB; }
+  .classui.flat .hoverable_component, .classui.flat .actionable_component, .classui.flat .__button.primary, .classui.flat input[type='button'].primary, .classui.flat input[type='submit'].primary, .classui.flat button.primary {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.flat .hoverable_component:hover, .classui.flat .actionable_component:hover, .classui.flat .__button.primary:hover, .classui.flat input[type='button'].primary:hover, .classui.flat input[type='submit'].primary:hover, .classui.flat button.primary:hover, .classui.flat .hoverable_component.active, .classui.flat .active.actionable_component, .classui.flat .active.__button.primary, .classui.flat input.active[type='button'].primary, .classui.flat input.active[type='submit'].primary, .classui.flat button.active.primary {
+      background-color: #27a15a;
+      color: white; }
+    .classui.flat .hoverable_component.disable, .classui.flat .disable.actionable_component, .classui.flat .disable.__button.primary, .classui.flat input.disable[type='button'].primary, .classui.flat input.disable[type='submit'].primary, .classui.flat button.disable.primary, .classui.flat .hoverable_component.disable:hover, .classui.flat .disable.actionable_component:hover, .classui.flat .disable.__button.primary:hover, .classui.flat input.disable[type='button'].primary:hover, .classui.flat input.disable[type='submit'].primary:hover, .classui.flat button.disable.primary:hover, .classui.flat .hoverable_component.disable:active, .classui.flat .disable.actionable_component:active, .classui.flat .disable.__button.primary:active, .classui.flat input.disable[type='button'].primary:active, .classui.flat input.disable[type='submit'].primary:active, .classui.flat button.disable.primary:active, .classui.flat .hoverable_component.disable.active, .classui.flat .disable.active.actionable_component, .classui.flat .disable.active.__button.primary, .classui.flat input.disable.active[type='button'].primary, .classui.flat input.disable.active[type='submit'].primary, .classui.flat button.disable.active.primary {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.flat .actionable_component:active, .classui.flat .__button.primary:active, .classui.flat input[type='button'].primary:active, .classui.flat input[type='submit'].primary:active, .classui.flat button.primary:active {
+    background-color: #217a45;
+    color: white; }
+
+.classui.fb {
+  position: relative; }
+  .classui.fb.fullheight {
+    min-height: 100vh; }
+  .classui.fb .hoverable_grey_component, .classui.flat .classui.fb button, .classui.fb .classui.flat button, .classui.fb .classui.flat .__dropdown > ul li, .classui.flat .__dropdown > ul .classui.fb li, .classui.fb .classui.flat .__sidemenu > .item, .classui.fb .actionable_grey_component, .classui.fb .__button, .classui.fb input[type='button'], .classui.fb input[type='submit'], .classui.fb button, .classui.fb .__dropdown > ul li, .classui.fb .__sidemenu > .item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.fb .hoverable_grey_component:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat .__dropdown > ul li:hover, .classui.flat .__dropdown > ul .classui.fb li:hover, .classui.fb .classui.flat .__sidemenu > .item:hover, .classui.fb .actionable_grey_component:hover, .classui.fb .__button:hover, .classui.fb input[type='button']:hover, .classui.fb input[type='submit']:hover, .classui.fb button:hover, .classui.fb .__dropdown > ul li:hover, .classui.fb .__sidemenu > .item:hover {
+      background-color: #DDDDDD; }
+    .classui.fb .hoverable_grey_component.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .classui.flat .__dropdown > ul li.active, .classui.flat .__dropdown > ul .classui.fb li.active, .classui.fb .classui.flat .__sidemenu > .active.item, .classui.fb .active.actionable_grey_component, .classui.fb .active.__button, .classui.fb input.active[type='button'], .classui.fb input.active[type='submit'], .classui.fb button.active, .classui.fb .__dropdown > ul li.active, .classui.fb .__sidemenu > .active.item {
+      background-color: #CCCCCC; }
+    .classui.fb .hoverable_grey_component.disable, .classui.fb .classui.flat button.disable, .classui.flat .classui.fb button.disable, .classui.fb .classui.flat .__dropdown > ul li.disable, .classui.flat .__dropdown > ul .classui.fb li.disable, .classui.fb .classui.flat .__sidemenu > .disable.item, .classui.fb .disable.actionable_grey_component, .classui.fb .disable.__button, .classui.fb input.disable[type='button'], .classui.fb input.disable[type='submit'], .classui.fb button.disable, .classui.fb .__dropdown > ul li.disable, .classui.fb .__sidemenu > .disable.item, .classui.fb .hoverable_grey_component.disable:hover, .classui.fb .classui.flat button.disable:hover, .classui.flat .classui.fb button.disable:hover, .classui.fb .classui.flat .__dropdown > ul li.disable:hover, .classui.flat .__dropdown > ul .classui.fb li.disable:hover, .classui.fb .classui.flat .__sidemenu > .disable.item:hover, .classui.fb .disable.actionable_grey_component:hover, .classui.fb .disable.__button:hover, .classui.fb input.disable[type='button']:hover, .classui.fb input.disable[type='submit']:hover, .classui.fb button.disable:hover, .classui.fb .__dropdown > ul li.disable:hover, .classui.fb .__sidemenu > .disable.item:hover, .classui.fb .hoverable_grey_component.disable:active, .classui.fb .classui.flat button.disable:active, .classui.flat .classui.fb button.disable:active, .classui.fb .classui.flat .__dropdown > ul li.disable:active, .classui.flat .__dropdown > ul .classui.fb li.disable:active, .classui.fb .classui.flat .__sidemenu > .disable.item:active, .classui.fb .disable.actionable_grey_component:active, .classui.fb .disable.__button:active, .classui.fb input.disable[type='button']:active, .classui.fb input.disable[type='submit']:active, .classui.fb button.disable:active, .classui.fb .__dropdown > ul li.disable:active, .classui.fb .__sidemenu > .disable.item:active, .classui.fb .hoverable_grey_component.disable.active, .classui.fb .classui.flat button.disable.active, .classui.flat .classui.fb button.disable.active, .classui.fb .classui.flat .__dropdown > ul li.disable.active, .classui.flat .__dropdown > ul .classui.fb li.disable.active, .classui.fb .classui.flat .__sidemenu > .disable.active.item, .classui.fb .disable.active.actionable_grey_component, .classui.fb .disable.active.__button, .classui.fb input.disable.active[type='button'], .classui.fb input.disable.active[type='submit'], .classui.fb button.disable.active, .classui.fb .__dropdown > ul li.disable.active, .classui.fb .__sidemenu > .disable.active.item {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.fb .actionable_grey_component:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .__button:hover, .classui.fb input[type='button']:hover, .classui.fb input[type='submit']:hover, .classui.fb button:hover {
+    background-color: #CCCCCC; }
+  .classui.fb .actionable_grey_component:active, .classui.fb .classui.flat button:active, .classui.flat .classui.fb button:active, .classui.fb .__button:active, .classui.fb input[type='button']:active, .classui.fb input[type='submit']:active, .classui.fb button:active, .classui.fb .actionable_grey_component.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .active.__button, .classui.fb input.active[type='button'], .classui.fb input.active[type='submit'], .classui.fb button.active {
+    background-color: #BBBBBB; }
+  .classui.fb .hoverable_component, .classui.fb .actionable_component, .classui.fb .__button.primary, .classui.fb input[type='button'].primary, .classui.fb input[type='submit'].primary, .classui.fb button.primary {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.fb .hoverable_component:hover, .classui.fb .actionable_component:hover, .classui.fb .__button.primary:hover, .classui.fb input[type='button'].primary:hover, .classui.fb input[type='submit'].primary:hover, .classui.fb button.primary:hover, .classui.fb .hoverable_component.active, .classui.fb .active.actionable_component, .classui.fb .active.__button.primary, .classui.fb input.active[type='button'].primary, .classui.fb input.active[type='submit'].primary, .classui.fb button.active.primary {
+      background-color: #3b5998;
+      color: white; }
+    .classui.fb .hoverable_component.disable, .classui.fb .disable.actionable_component, .classui.fb .disable.__button.primary, .classui.fb input.disable[type='button'].primary, .classui.fb input.disable[type='submit'].primary, .classui.fb button.disable.primary, .classui.fb .hoverable_component.disable:hover, .classui.fb .disable.actionable_component:hover, .classui.fb .disable.__button.primary:hover, .classui.fb input.disable[type='button'].primary:hover, .classui.fb input.disable[type='submit'].primary:hover, .classui.fb button.disable.primary:hover, .classui.fb .hoverable_component.disable:active, .classui.fb .disable.actionable_component:active, .classui.fb .disable.__button.primary:active, .classui.fb input.disable[type='button'].primary:active, .classui.fb input.disable[type='submit'].primary:active, .classui.fb button.disable.primary:active, .classui.fb .hoverable_component.disable.active, .classui.fb .disable.active.actionable_component, .classui.fb .disable.active.__button.primary, .classui.fb input.disable.active[type='button'].primary, .classui.fb input.disable.active[type='submit'].primary, .classui.fb button.disable.active.primary {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.fb .actionable_component:active, .classui.fb .__button.primary:active, .classui.fb input[type='button'].primary:active, .classui.fb input[type='submit'].primary:active, .classui.fb button.primary:active {
+    background-color: #2f4779;
+    color: white; }
+  .classui.fb .inline-block {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline; }
+  .classui.fb .noTextWrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden; }
+  .classui.fb .successColor {
+    color: #27a15a; }
+  .classui.fb .errorColor {
+    color: #EC5050; }
+  .classui.fb .__button, .classui.fb input[type='button'], .classui.fb input[type='submit'], .classui.fb button {
+    padding: 10px;
+    background-color: #DDDDDD;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+    .classui.fb .__button.flat, .classui.fb input[type='button'].flat, .classui.fb input[type='submit'].flat, .classui.fb button.flat {
+      background-color: inherit; }
+    .classui.fb .__button.disable, .classui.fb .__button.disable:hover, .classui.fb .__button.disable:active, .classui.fb input[type='button'].disable, .classui.fb input[type='button'].disable:hover, .classui.fb input[type='button'].disable:active, .classui.fb input[type='submit'].disable, .classui.fb input[type='submit'].disable:hover, .classui.fb input[type='submit'].disable:active, .classui.fb button.disable, .classui.fb button.disable:hover, .classui.fb button.disable:active {
+      background-color: #DDDDDD !important; }
+    .classui.fb .__button, .classui.fb .__button:hover, .classui.fb .__button:active, .classui.fb input[type='button'], .classui.fb input[type='button']:hover, .classui.fb input[type='button']:active, .classui.fb input[type='submit'], .classui.fb input[type='submit']:hover, .classui.fb input[type='submit']:active, .classui.fb button, .classui.fb button:hover, .classui.fb button:active {
+      border-width: 0px;
+      outline-width: 0px; }
+  .classui.fb .__dropdown {
+    position: relative;
+    z-index: 5;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline; }
+    .classui.fb .__dropdown.push-left ul {
+      right: 0px; }
+    .classui.fb .__dropdown.push-right ul {
+      left: 0px; }
+    .classui.fb .__dropdown.push-up ul {
+      top: auto;
+      bottom: 100%; }
+    .classui.fb .__dropdown > ul {
+      position: absolute;
+      background-color: white;
+      color: black;
+      top: 100%;
+      max-width: 200px;
+      min-width: 150px; }
+      .classui.fb .__dropdown > ul li {
+        padding: 10px; }
+  .classui.fb .__badge {
+    padding: 7px 10px;
+    cursor: default;
+    color: white;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s; }
+    .classui.fb .__badge, .classui.fb .__badge.success {
+      background-color: #27AE60; }
+    .classui.fb .__badge.error {
+      background-color: #E74C3C; }
+    .classui.fb .__badge.sunflower {
+      background-color: #F1C404; }
+    .classui.fb .__badge.carrot {
+      background-color: #E67E22; }
+    .classui.fb .__badge.grey {
+      background-color: #95A5A6; }
+  .classui.fb .__navbar {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 3px;
+    background-color: #3b5998;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s; }
+    .classui.fb .__navbar.dummy {
+      opacity: 0; }
+    .classui.fb .__navbar.light {
+      background-color: white; }
+      .classui.fb .__navbar.light > .content > .logo {
+        color: #3b5998;
+        text-shadow: 0px 0px 10px #3b5998, 0px 0px 10px #3b5998; }
+        .classui.fb .__navbar.light > .content > .logo:hover {
+          text-shadow: 0px 0px 10px #3b5998, 0px 0px 10px #3b5998, 0px 0px 10px #3b5998; }
+      .classui.fb .__navbar.light > .content .button {
+        color: #3b5998;
+        background-color: inherit; }
+        .classui.fb .__navbar.light > .content .button:hover, .classui.fb .__navbar.light > .content .button:active, .classui.fb .__navbar.light > .content .button.active {
+          background-color: #e6e6e6; }
+    .classui.fb .__navbar > .content {
+      max-width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-flex-grow: 0;
+      flex-grow: 0;
+      margin: auto;
+      height: 100%;
+      color: white; }
+      .classui.fb .__navbar > .content > .logo {
+        cursor: default;
+        padding: 0px 7px;
+        font-size: 20px;
+        text-shadow: 0px 0px 15px white, 0px 0px 15px white;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        -o-transition: all 0.3s;
+        transition: all 0.3s; }
+        .classui.fb .__navbar > .content > .logo::first-letter {
+          font-size: 30px; }
+        .classui.fb .__navbar > .content > .logo:hover {
+          text-shadow: 0px 0px 15px white, 0px 0px 15px white, 0px 0px 15px white; }
+      .classui.fb .__navbar > .content > .remain {
+        -webkit-flex-grow: 1;
+        flex-grow: 1; }
+      .classui.fb .__navbar > .content .__button {
+        background-color: inherit; }
+        .classui.fb .__navbar > .content .__button.disable, .classui.fb .__navbar > .content .__button.disable:active, .classui.fb .__navbar > .content .__button.disable.active {
+          background-color: inherit !important;
+          color: #b3b3b3; }
+        .classui.fb .__navbar > .content .__button:hover, .classui.fb .__navbar > .content .__button:active, .classui.fb .__navbar > .content .__button.active {
+          background-color: #2f4779; }
+  .classui.fb .__input, .classui.fb input[type='text'], .classui.fb input[type='number'], .classui.fb input[type='password'], .classui.fb textarea {
+    background-color: inherit;
+    font-size: 15px;
+    border-width: 0px;
+    outline-width: 0px;
+    width: 100%;
+    border-bottom: 2px solid #DFDFDF;
+    color: black;
+    padding: 5px 0px;
+    padding-bottom: 4px;
+    margin: 0px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+    .classui.fb .__input:focus, .classui.fb input[type='text']:focus, .classui.fb input[type='number']:focus, .classui.fb input[type='password']:focus, .classui.fb textarea:focus {
+      border-bottom: 2px solid black;
+      outline-width: 0px; }
+  .classui.fb label.__input_checkbox, .classui.fb label.__input_radio {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 5px; }
+    .classui.fb label.__input_checkbox.inline, .classui.fb label.__input_radio.inline {
+      display: -webkit-inline-flex;
+      display: inline-flex;
+      padding-right: 10px;
+      margin-right: 5px; }
+    .classui.fb label.__input_checkbox:hover, .classui.fb label.__input_radio:hover {
+      background-color: #F4F4F4; }
+    .classui.fb label.__input_checkbox > input[type='checkbox'], .classui.fb label.__input_checkbox > input[type='radio'], .classui.fb label.__input_radio > input[type='checkbox'], .classui.fb label.__input_radio > input[type='radio'] {
+      display: none; }
+      .classui.fb label.__input_checkbox > input[type='checkbox']:checked ~ .fake, .classui.fb label.__input_checkbox > input[type='radio']:checked ~ .fake, .classui.fb label.__input_radio > input[type='checkbox']:checked ~ .fake, .classui.fb label.__input_radio > input[type='radio']:checked ~ .fake {
+        border: 1px solid #2f4779;
+        background-color: #3b5998; }
+      .classui.fb label.__input_checkbox > input[type='checkbox']:focus ~ .fake, .classui.fb label.__input_checkbox > input[type='radio']:focus ~ .fake, .classui.fb label.__input_radio > input[type='checkbox']:focus ~ .fake, .classui.fb label.__input_radio > input[type='radio']:focus ~ .fake {
+        -webkit-box-shadow: 0 0px 10px grey;
+        -moz-box-shadow: 0 0px 10px grey;
+        box-shadow: 0 0px 10px grey; }
+    .classui.fb label.__input_checkbox > input[type='radio'] ~ .fake, .classui.fb label.__input_radio > input[type='radio'] ~ .fake {
+      border-radius: 10px; }
+    .classui.fb label.__input_checkbox > .fake, .classui.fb label.__input_radio > .fake {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-align-items: center;
+      align-items: center;
+      width: 17px;
+      height: 17px;
+      margin-right: 10px;
+      border: 1px solid black;
+      font-size: 15px;
+      color: white;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+  .classui.fb .__input_select {
+    position: relative;
+    display: block; }
+    .classui.fb .__input_select > .input {
+      cursor: pointer;
+      color: transparent;
+      text-shadow: 0px 0px 0px #000;
+      background-color: white; }
+    .classui.fb .__input_select > .suggestions {
+      position: absolute;
+      top: 0px;
+      bottom: auto;
+      padding: 10px 0px;
+      background-color: white;
+      width: 100%;
+      max-height: 300px;
+      overflow: auto;
+      box-shadow: 0px 0px 3px grey; }
+      .classui.fb .__input_select > .suggestions > span {
+        display: block;
+        cursor: pointer;
+        padding: 7px 10px; }
+        .classui.fb .__input_select > .suggestions > span:hover {
+          background-color: #3b5998;
+          color: white; }
+        .classui.fb .__input_select > .suggestions > span.active, .classui.fb .__input_select > .suggestions > span.active:hover {
+          background-color: inherit;
+          color: #3b5998;
+          cursor: default; }
+    .classui.fb .__input_select.top > .suggestions {
+      top: auto;
+      bottom: 0px; }
+    .classui.fb .__input_select.editable > .input {
+      color: black;
+      padding: 7px 0px;
+      cursor: text; }
+      .classui.fb .__input_select.editable > .input:focus {
+        cursor: auto;
+        padding-left: 10px; }
+      .classui.fb .__input_select.editable > .input:hover {
+        border-bottom: 2px solid black; }
+    .classui.fb .__input_select.editable > .suggestions {
+      top: 100%;
+      bottom: auto; }
+    .classui.fb .__input_select.editable.top > .suggestions {
+      top: auto;
+      bottom: 100%; }
+  .classui.fb .__input_layout {
+    display: block;
+    margin-bottom: 5px; }
+    .classui.fb .__input_layout > .label {
+      font-size: 13px; }
+    .classui.fb .__input_layout > .error {
+      max-height: 0px;
+      overflow: hidden;
+      opacity: 0;
+      padding: 5px 0px;
+      font-size: 13px;
+      color: #ff1744;
+      -webkit-transition: max-height 0.5s;
+      -moz-transition: max-height 0.5s;
+      -o-transition: max-height 0.5s;
+      transition: max-height 0.5s; }
+    .classui.fb .__input_layout.error > input[type="text"], .classui.fb .__input_layout.error input[type='number'], .classui.fb .__input_layout.error input[type='password'], .classui.fb .__input_layout.error textarea {
+      border-bottom: 2px solid #EC5050; }
+    .classui.fb .__input_layout.error > .label {
+      color: #ff1744; }
+    .classui.fb .__input_layout.error > .error {
+      text-transform: capitalize;
+      max-height: 50px;
+      overflow-wrap: break-word;
+      opacity: 1; }
+    .classui.fb .__input_layout.success > input[type="text"], .classui.fb .__input_layout.success input[type='number'], .classui.fb .__input_layout.success input[type='password'], .classui.fb .__input_layout.success textarea {
+      border-bottom: 2px solid #2f4779; }
+    .classui.fb .__input_layout.success > .label {
+      color: #2f4779; }
+  .classui.fb .__flash {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); }
+    .classui.fb .__flash.noDismiss {
+      background-color: rgba(0, 0, 0, 0.8); }
+    .classui.fb .__flash > .content {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto; }
+      .classui.fb .__flash > .content > .close {
+        font-weight: 900;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 10px;
+        min-width: 40px;
+        min-height: 40px; }
+  .classui.fb .__drawer {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    -webkit-align-items: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); }
+    .classui.fb .__drawer > .content > .close {
+      left: 0px; }
+    .classui.fb .__drawer.noDismiss {
+      background-color: rgba(0, 0, 0, 0.8); }
+    .classui.fb .__drawer.left {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: left;
+      justify-content: left;
+      -webkit-align-items: center;
+      align-items: center; }
+      .classui.fb .__drawer.left > .content > .close {
+        right: 0px; }
+    .classui.fb .__drawer > .content {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto; }
+      .classui.fb .__drawer > .content > .close {
+        font-weight: 900;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        align-items: center;
+        position: absolute;
+        top: 0px;
+        padding: 10px;
+        min-width: 40px; }
+  .classui.fb .__feedback {
+    position: fixed;
+    top: 0px;
+    left: 50%; }
+    .classui.fb .__feedback > .content {
+      display: -moz-inline-stack;
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      zoom: 1;
+      *display: inline;
+      position: relative;
+      right: 50%;
+      padding: 15px;
+      min-width: 200px;
+      text-align: center; }
+      .classui.fb .__feedback > .content.error {
+        background-color: #ffdfdf;
+        color: #c90000;
+        font-weight: 900; }
+      .classui.fb .__feedback > .content.success {
+        background-color: #d4ffd4;
+        color: #007700;
+        font-weight: 900; }
+  .classui.fb .__sidemenu {
+    border: 1px solid #DDDDDD;
+    background-color: white;
+    padding: 10px 0px; }
+    .classui.fb .__sidemenu > .header {
+      padding: 0px 10px; }
+    .classui.fb .__sidemenu > .divider {
+      border-top: 1px solid grey;
+      margin: 10px 5px; }
+    .classui.fb .__sidemenu > .item {
+      padding: 7px 10px; }
+      .classui.fb .__sidemenu > .item > .badge {
+        color: red;
+        font-size: 80%;
+        font-weight: 900; }
+  .classui.fb .__table {
+    display: table;
+    background-color: white;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%; }
+    .classui.fb .__table > thead > tr {
+      font-weight: 900; }
+      .classui.fb .__table > thead > tr > th {
+        cursor: pointer;
+        opacity: 0.7;
+        text-transform: capitalize; }
+        .classui.fb .__table > thead > tr > th:hover {
+          background-color: rgba(0, 0, 0, 0.01);
+          opacity: 1; }
+    .classui.fb .__table.hoverable > tbody > tr:hover {
+      background-color: whitesmoke; }
+    .classui.fb .__table > tbody tr {
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s; }
+    .classui.fb .__table > tbody > tr.active:hover, .classui.fb .__table > tbody > tr.active {
+      background-color: #3b5998;
+      color: white; }
+    .classui.fb .__table > thead > tr, .classui.fb .__table > tbody > tr {
+      border-bottom: 1px solid #CACACA;
+      text-align: left; }
+      .classui.fb .__table > thead > tr > td, .classui.fb .__table > thead > tr > th, .classui.fb .__table > tbody > tr > td, .classui.fb .__table > tbody > tr > th {
+        padding: 7px 17px; }
+  .classui.fb .__card._0 {
+    border: 1px solid #DDDDDD; }
+  .classui.fb .__card._1 {
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .classui.fb .__card._2 {
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .classui.fb .__card._3 {
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+  .classui.fb .__card._4 {
+    -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  .classui.fb .__card._5 {
+    -webkit-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22); }
+  .classui.fb .__navbar {
+    z-index: 10; }
+  .classui.fb .__flash {
+    z-index: 15; }
+  .classui.fb .__drawer {
+    z-index: 15; }
+  .classui.fb .__feedback {
+    z-index: 20; }
+  .classui.fb .classui > .mainContent {
+    z-index: 5; }
+  .classui.fb .hoverable_grey_component, .classui.flat .classui.fb button, .classui.fb .classui.flat button, .classui.fb .classui.flat .__dropdown > ul li, .classui.flat .__dropdown > ul .classui.fb li, .classui.fb .classui.flat .__sidemenu > .item, .classui.fb .actionable_grey_component, .classui.fb .__button, .classui.fb input[type='button'], .classui.fb input[type='submit'], .classui.fb button, .classui.fb .__dropdown > ul li, .classui.fb .__sidemenu > .item {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.fb .hoverable_grey_component:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .classui.flat .__dropdown > ul li:hover, .classui.flat .__dropdown > ul .classui.fb li:hover, .classui.fb .classui.flat .__sidemenu > .item:hover, .classui.fb .actionable_grey_component:hover, .classui.fb .__button:hover, .classui.fb input[type='button']:hover, .classui.fb input[type='submit']:hover, .classui.fb button:hover, .classui.fb .__dropdown > ul li:hover, .classui.fb .__sidemenu > .item:hover {
+      background-color: #DDDDDD; }
+    .classui.fb .hoverable_grey_component.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .classui.flat .__dropdown > ul li.active, .classui.flat .__dropdown > ul .classui.fb li.active, .classui.fb .classui.flat .__sidemenu > .active.item, .classui.fb .active.actionable_grey_component, .classui.fb .active.__button, .classui.fb input.active[type='button'], .classui.fb input.active[type='submit'], .classui.fb button.active, .classui.fb .__dropdown > ul li.active, .classui.fb .__sidemenu > .active.item {
+      background-color: #CCCCCC; }
+    .classui.fb .hoverable_grey_component.disable, .classui.fb .classui.flat button.disable, .classui.flat .classui.fb button.disable, .classui.fb .classui.flat .__dropdown > ul li.disable, .classui.flat .__dropdown > ul .classui.fb li.disable, .classui.fb .classui.flat .__sidemenu > .disable.item, .classui.fb .disable.actionable_grey_component, .classui.fb .disable.__button, .classui.fb input.disable[type='button'], .classui.fb input.disable[type='submit'], .classui.fb button.disable, .classui.fb .__dropdown > ul li.disable, .classui.fb .__sidemenu > .disable.item, .classui.fb .hoverable_grey_component.disable:hover, .classui.fb .classui.flat button.disable:hover, .classui.flat .classui.fb button.disable:hover, .classui.fb .classui.flat .__dropdown > ul li.disable:hover, .classui.flat .__dropdown > ul .classui.fb li.disable:hover, .classui.fb .classui.flat .__sidemenu > .disable.item:hover, .classui.fb .disable.actionable_grey_component:hover, .classui.fb .disable.__button:hover, .classui.fb input.disable[type='button']:hover, .classui.fb input.disable[type='submit']:hover, .classui.fb button.disable:hover, .classui.fb .__dropdown > ul li.disable:hover, .classui.fb .__sidemenu > .disable.item:hover, .classui.fb .hoverable_grey_component.disable:active, .classui.fb .classui.flat button.disable:active, .classui.flat .classui.fb button.disable:active, .classui.fb .classui.flat .__dropdown > ul li.disable:active, .classui.flat .__dropdown > ul .classui.fb li.disable:active, .classui.fb .classui.flat .__sidemenu > .disable.item:active, .classui.fb .disable.actionable_grey_component:active, .classui.fb .disable.__button:active, .classui.fb input.disable[type='button']:active, .classui.fb input.disable[type='submit']:active, .classui.fb button.disable:active, .classui.fb .__dropdown > ul li.disable:active, .classui.fb .__sidemenu > .disable.item:active, .classui.fb .hoverable_grey_component.disable.active, .classui.fb .classui.flat button.disable.active, .classui.flat .classui.fb button.disable.active, .classui.fb .classui.flat .__dropdown > ul li.disable.active, .classui.flat .__dropdown > ul .classui.fb li.disable.active, .classui.fb .classui.flat .__sidemenu > .disable.active.item, .classui.fb .disable.active.actionable_grey_component, .classui.fb .disable.active.__button, .classui.fb input.disable.active[type='button'], .classui.fb input.disable.active[type='submit'], .classui.fb button.disable.active, .classui.fb .__dropdown > ul li.disable.active, .classui.fb .__sidemenu > .disable.active.item {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.fb .actionable_grey_component:hover, .classui.fb .classui.flat button:hover, .classui.flat .classui.fb button:hover, .classui.fb .__button:hover, .classui.fb input[type='button']:hover, .classui.fb input[type='submit']:hover, .classui.fb button:hover {
+    background-color: #CCCCCC; }
+  .classui.fb .actionable_grey_component:active, .classui.fb .classui.flat button:active, .classui.flat .classui.fb button:active, .classui.fb .__button:active, .classui.fb input[type='button']:active, .classui.fb input[type='submit']:active, .classui.fb button:active, .classui.fb .actionable_grey_component.active, .classui.fb .classui.flat button.active, .classui.flat .classui.fb button.active, .classui.fb .active.__button, .classui.fb input.active[type='button'], .classui.fb input.active[type='submit'], .classui.fb button.active {
+    background-color: #BBBBBB; }
+  .classui.fb .hoverable_component, .classui.fb .actionable_component, .classui.fb .__button.primary, .classui.fb input[type='button'].primary, .classui.fb input[type='submit'].primary, .classui.fb button.primary {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; }
+    .classui.fb .hoverable_component:hover, .classui.fb .actionable_component:hover, .classui.fb .__button.primary:hover, .classui.fb input[type='button'].primary:hover, .classui.fb input[type='submit'].primary:hover, .classui.fb button.primary:hover, .classui.fb .hoverable_component.active, .classui.fb .active.actionable_component, .classui.fb .active.__button.primary, .classui.fb input.active[type='button'].primary, .classui.fb input.active[type='submit'].primary, .classui.fb button.active.primary {
+      background-color: #3b5998;
+      color: white; }
+    .classui.fb .hoverable_component.disable, .classui.fb .disable.actionable_component, .classui.fb .disable.__button.primary, .classui.fb input.disable[type='button'].primary, .classui.fb input.disable[type='submit'].primary, .classui.fb button.disable.primary, .classui.fb .hoverable_component.disable:hover, .classui.fb .disable.actionable_component:hover, .classui.fb .disable.__button.primary:hover, .classui.fb input.disable[type='button'].primary:hover, .classui.fb input.disable[type='submit'].primary:hover, .classui.fb button.disable.primary:hover, .classui.fb .hoverable_component.disable:active, .classui.fb .disable.actionable_component:active, .classui.fb .disable.__button.primary:active, .classui.fb input.disable[type='button'].primary:active, .classui.fb input.disable[type='submit'].primary:active, .classui.fb button.disable.primary:active, .classui.fb .hoverable_component.disable.active, .classui.fb .disable.active.actionable_component, .classui.fb .disable.active.__button.primary, .classui.fb input.disable.active[type='button'].primary, .classui.fb input.disable.active[type='submit'].primary, .classui.fb button.disable.active.primary {
+      cursor: default;
+      background-color: inherit;
+      color: grey; }
+  .classui.fb .actionable_component:active, .classui.fb .__button.primary:active, .classui.fb input[type='button'].primary:active, .classui.fb input[type='submit'].primary:active, .classui.fb button.primary:active {
+    background-color: #2f4779;
+    color: white; }
