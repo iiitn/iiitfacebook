@@ -7,3 +7,4 @@ yarn.lock
 
 bundle/*
 !bundle/classbook.css
+package-lock.json

@@ -3,8 +3,13 @@
 
 @mixin customStyling() {
 	&.classbook {
-		
+		display: flex;
+		flex-direction: column;
+		@import 'login';
 		@import 'home';
+		@import 'profile';
+		@import 'components/wall';
+		@import 'components/online';
 	}
 }
 

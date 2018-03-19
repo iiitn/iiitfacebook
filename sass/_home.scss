@@ -1,0 +1,16 @@
+div.homePage {
+	> .walls {
+		flex-grow: 1;
+		max-width: 500px;
+		width: 100%;
+		margin: auto;
+	}
+	> .onlineList {
+		position: fixed;
+		right: 0px;
+		padding-top: 60px;
+		height: 100vh;
+		top: 0px;
+		width: 200px;
+	}
+}

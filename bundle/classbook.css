@@ -440,10 +440,12 @@ h1, h2, h3, h4, h5, h6 {
       top: auto;
       bottom: 100%; }
   .classui.flat .__input_layout {
+    text-align: left;
     display: block;
     margin-bottom: 5px; }
     .classui.flat .__input_layout > .label {
-      font-size: 13px; }
+      font-size: 13px;
+      font-weight: 900; }
     .classui.flat .__input_layout > .error {
       max-height: 0px;
       overflow: hidden;
@@ -680,6 +682,93 @@ h1, h2, h3, h4, h5, h6 {
   .classui.flat .actionable_component:active, .classui.flat .__button.primary:active, .classui.flat input[type='button'].primary:active, .classui.flat input[type='submit'].primary:active, .classui.flat button.primary:active {
     background-color: #217a45;
     color: white; }
+  .classui.flat.classbook {
+    display: flex;
+    flex-direction: column; }
+    .classui.flat.classbook div.loginPage {
+      max-width: 1024px;
+      width: 100%;
+      margin: auto;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .classui.flat.classbook div.loginPage > .login, .classui.flat.classbook div.loginPage > .register {
+        background-color: white;
+        padding: 20px;
+        max-width: 250px;
+        width: 100%;
+        margin: 20px;
+        text-align: left; }
+        .classui.flat.classbook div.loginPage > .login .title, .classui.flat.classbook div.loginPage > .register .title {
+          margin-bottom: 20px; }
+    .classui.flat.classbook div.homePage > .walls {
+      flex-grow: 1;
+      max-width: 500px;
+      width: 100%;
+      margin: auto; }
+    .classui.flat.classbook div.homePage > .onlineList {
+      position: fixed;
+      right: 0px;
+      padding-top: 60px;
+      height: 100vh;
+      top: 0px;
+      width: 200px; }
+    .classui.flat.classbook div.profilePage > .walls {
+      max-width: 500px;
+      width: 100%;
+      margin: auto; }
+    .classui.flat.classbook .component_wall {
+      background-color: white;
+      padding: 15px; }
+      .classui.flat.classbook .component_wall > .head {
+        display: flex;
+        align-items: center; }
+        .classui.flat.classbook .component_wall > .head > .image {
+          width: 50px;
+          height: 50px;
+          margin-right: 15px;
+          background-color: #27AE60; }
+        .classui.flat.classbook .component_wall > .head > .details {
+          flex-grow: 1; }
+          .classui.flat.classbook .component_wall > .head > .details > .posted_by {
+            font-weight: 900;
+            color: #289254; }
+          .classui.flat.classbook .component_wall > .head > .details > .time {
+            color: #a8a8a8;
+            font-size: 12px; }
+      .classui.flat.classbook .component_wall > .content {
+        margin-top: 10px;
+        display: flex;
+        width: 100%;
+        background-color: aliceblue;
+        min-height: 100px;
+        align-items: center;
+        line-height: 1.7;
+        font-size: 13px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word; }
+      .classui.flat.classbook .component_wall > .options {
+        margin-top: 10px; }
+      .classui.flat.classbook .component_wall > .comments {
+        margin-top: 10px;
+        background-color: grey; }
+    .classui.flat.classbook .component_onlineList {
+      background-color: white; }
+      .classui.flat.classbook .component_onlineList .title {
+        padding-left: 10px; }
+      .classui.flat.classbook .component_onlineList > .item {
+        font-size: 13px;
+        padding: 10px;
+        cursor: pointer; }
+        .classui.flat.classbook .component_onlineList > .item:hover {
+          background-color: #d8d8d8; }
+        .classui.flat.classbook .component_onlineList > .item.online {
+          font-weight: 900;
+          color: green; }
 
 .classui.fb {
   position: relative; }
@@ -965,10 +1054,12 @@ h1, h2, h3, h4, h5, h6 {
       top: auto;
       bottom: 100%; }
   .classui.fb .__input_layout {
+    text-align: left;
     display: block;
     margin-bottom: 5px; }
     .classui.fb .__input_layout > .label {
-      font-size: 13px; }
+      font-size: 13px;
+      font-weight: 900; }
     .classui.fb .__input_layout > .error {
       max-height: 0px;
       overflow: hidden;
@@ -1205,3 +1296,90 @@ h1, h2, h3, h4, h5, h6 {
   .classui.fb .actionable_component:active, .classui.fb .__button.primary:active, .classui.fb input[type='button'].primary:active, .classui.fb input[type='submit'].primary:active, .classui.fb button.primary:active {
     background-color: #2f4779;
     color: white; }
+  .classui.fb.classbook {
+    display: flex;
+    flex-direction: column; }
+    .classui.fb.classbook div.loginPage {
+      max-width: 1024px;
+      width: 100%;
+      margin: auto;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .classui.fb.classbook div.loginPage > .login, .classui.fb.classbook div.loginPage > .register {
+        background-color: white;
+        padding: 20px;
+        max-width: 250px;
+        width: 100%;
+        margin: 20px;
+        text-align: left; }
+        .classui.fb.classbook div.loginPage > .login .title, .classui.fb.classbook div.loginPage > .register .title {
+          margin-bottom: 20px; }
+    .classui.fb.classbook div.homePage > .walls {
+      flex-grow: 1;
+      max-width: 500px;
+      width: 100%;
+      margin: auto; }
+    .classui.fb.classbook div.homePage > .onlineList {
+      position: fixed;
+      right: 0px;
+      padding-top: 60px;
+      height: 100vh;
+      top: 0px;
+      width: 200px; }
+    .classui.fb.classbook div.profilePage > .walls {
+      max-width: 500px;
+      width: 100%;
+      margin: auto; }
+    .classui.fb.classbook .component_wall {
+      background-color: white;
+      padding: 15px; }
+      .classui.fb.classbook .component_wall > .head {
+        display: flex;
+        align-items: center; }
+        .classui.fb.classbook .component_wall > .head > .image {
+          width: 50px;
+          height: 50px;
+          margin-right: 15px;
+          background-color: #4e69a2; }
+        .classui.fb.classbook .component_wall > .head > .details {
+          flex-grow: 1; }
+          .classui.fb.classbook .component_wall > .head > .details > .posted_by {
+            font-weight: 900;
+            color: #355088; }
+          .classui.fb.classbook .component_wall > .head > .details > .time {
+            color: #a8a8a8;
+            font-size: 12px; }
+      .classui.fb.classbook .component_wall > .content {
+        margin-top: 10px;
+        display: flex;
+        width: 100%;
+        background-color: aliceblue;
+        min-height: 100px;
+        align-items: center;
+        line-height: 1.7;
+        font-size: 13px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word; }
+      .classui.fb.classbook .component_wall > .options {
+        margin-top: 10px; }
+      .classui.fb.classbook .component_wall > .comments {
+        margin-top: 10px;
+        background-color: grey; }
+    .classui.fb.classbook .component_onlineList {
+      background-color: white; }
+      .classui.fb.classbook .component_onlineList .title {
+        padding-left: 10px; }
+      .classui.fb.classbook .component_onlineList > .item {
+        font-size: 13px;
+        padding: 10px;
+        cursor: pointer; }
+        .classui.fb.classbook .component_onlineList > .item:hover {
+          background-color: #d8d8d8; }
+        .classui.fb.classbook .component_onlineList > .item.online {
+          font-weight: 900;
+          color: green; }

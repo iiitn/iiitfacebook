@@ -4,17 +4,18 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"sass": "~/.yarn/bin/node-sass sass/main.scss bundle/classbook.css -w",
+		"scss": "~/.yarn/bin/node-sass sass/main.scss bundle/classbook.css -w",
 		"start": "webpack-dev-server",
 		"getclassui": "./getupdate.sh"
 	},
 	"dependencies": {
-		"classui": "file:../../../../Dream/Class-UI/classui.tgz"
+		"classui": "file:/home/kishore/Dream/Class-UI/classui.tgz"
 	},
 	"devDependencies": {
 		"copy-webpack-plugin": "^4.0.1",
 		"source-map-loader": "^0.2.3",
-		"ts-loader": "^4.0.1"
+		"ts-loader": "^4.0.1",
+		"typescript": "^2.7.2"
 	},
 	"author": "Kishore <kishore.iiitn@gmail.com>",
 	"license": "ISC"

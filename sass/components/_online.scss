@@ -1,0 +1,19 @@
+.component_onlineList {
+	background-color: white;
+	.title {
+		padding-left: 10px;
+	}
+	> .item {
+		font-size: 13px;
+		padding: 10px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #d8d8d8;
+		}
+		&.online {
+			font-weight: 900;
+			color: green;
+		}
+	}
+}

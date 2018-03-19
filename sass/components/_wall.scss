@@ -1,0 +1,51 @@
+
+
+.component_wall {
+	background-color: white;
+	padding: 15px;
+
+	> .head {
+		display: flex;
+		align-items: center;
+		> .image {
+			width: 50px;
+			height: 50px;
+			margin-right: 15px;
+			background-color: map-get($map: $theme, $key: color-light);
+		}
+		> .details {
+			flex-grow: 1;
+			> .posted_by {
+				font-weight: 900;
+				color: map-get($map: $theme, $key: color-dark);
+			}
+			> .time {
+				color: #a8a8a8;
+				font-size: 12px;
+			}
+		}
+		> .options {
+			// Any styles if reuired.
+		}
+	}
+	> .content {
+		margin-top: 10px;
+		display: flex;
+		width: 100%;
+		background-color: aliceblue;
+		min-height: 100px;
+		align-items: center;
+		line-height: 1.7;
+		font-size: 13px;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		@include word-break(break-all);
+	}
+	> .options {
+		margin-top: 10px;
+	}
+	> .comments {
+		margin-top: 10px;
+		background-color: grey;
+	}
+}
