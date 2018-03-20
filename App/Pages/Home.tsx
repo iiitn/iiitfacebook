@@ -3,6 +3,7 @@ import { NavBar, NavbarRemain } from "classui";
 import { Button, Div, TextField } from "classui/Components";
 import { Dropdown, DItem } from "classui/Components/Dropdown";
 import { Wall } from "./Components/Wall";
+import { OnlineList } from "./Components/OnlineList";
 
 export let Home = (props: any)=>{
 	return <>
@@ -11,23 +12,15 @@ export let Home = (props: any)=>{
 			<Button to="/home">
 				Home
 			</Button>
-			<Button to="/Profile">
-				Profile
-			</Button>
 			<Button to="/login">
 				Login
 			</Button>
 		</NavBar>
 		<div className="homePage">
 			<div className="walls">
-				<Wall />
+				{/*<Wall />*/}
 			</div>
-			<Div card="2" className="onlineList component_onlineList">
-				<h3 className="title">Online List</h3>
-				<hr style={{opacity: 0.3}}/>
-				<div className="item online">Kishore</div>
-				<div className="item">Kittu</div>
-			</Div>
+			<OnlineList className="onlineList"/>
 		</div>
 	</>;
 }
