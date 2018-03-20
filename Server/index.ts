@@ -1,6 +1,8 @@
-import  * as http from "http";
+import * as http from "http";
 import * as express from "express";
 import * as path from "path";
+import * as SocketIO from 'socket.io';
+
 let App = express();
 let httpServer  = new http.Server(App);
 
@@ -10,6 +12,36 @@ httpServer.listen(2002,()=> {
 })
 
 App.use(express.static("./"));
+
 App.get("*",(req,res)=>{
-	res.sendfile(path.resolve("./index.html"));
-})
+	res.sendFile(path.resolve("./index.html"));
+});
+
+let IO = SocketIO(httpServer);
+
+let users: string[] = [];
+IO.on("connection", (socket)=>{
+	let name: string;
+	socket.on("disconnect", ()=>{
+		users = users.filter(u=>u!=name);
+		console.log("Online List : ", users);
+		IO.send({
+			type: "ONLINE_LIST",
+			users
+		});	
+	});
+
+	socket.on("message", (action)=>{
+		if (action.type=="USER_ONLINE") {
+			name = action.name;
+			users.push(action.name);
+			console.log("Online List : ", users);
+			IO.send({
+				type: "ONLINE_LIST",
+				users
+			});
+		
+		}
+	})
+});
+
