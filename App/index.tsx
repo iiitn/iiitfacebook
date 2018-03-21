@@ -6,7 +6,6 @@ import { Home } from './Pages/Home';
 import { Login } from './Pages/Login';
 import { Dispatch, store } from './State';
 import { Provider } from 'react-redux';
-import { CFile } from './libraries/CFile';
 
 
 interface IProps {};
