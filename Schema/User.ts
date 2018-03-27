@@ -14,7 +14,7 @@ export let UserSchema: IJSONSchema = {
 			minLength: 5
 		},
 		gender: {
-			type: "string"
+			enum: ["male", "female"]
 		}
 	},
 	required: ["_id", "name", "password", "gender"]

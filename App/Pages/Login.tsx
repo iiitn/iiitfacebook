@@ -4,28 +4,31 @@ import { Button, Div, TextField, Feedback } from "classui/Components";
 import { Form, Checkbox, Radio } from "classui/Components/Form";
 import { UserSchema } from "../../Schema/User";
 import { Socket } from "../Network";
+import { styled, css } from "classui/Emotion";
 
-Socket.emit("register", undefined);
-Socket.on("register", (data: any)=>{
-	if (data.error) {
-		Feedback.show(data.error, "error");
+let LoginPage = styled('div')`
+	max-width: 1024px;
+	width: 100%;
+	margin: auto;
+	flex-grow: 1;
+	display: flex;
+	@media (max-width: 600px) {
+		flex-direction: column;
 	}
-	else {
-		Feedback.show(data.success, "success")
+	align-items: center;
+	justify-content: center;
+`;
+let form = css`
+	background-color: white;
+	padding: 20px;
+	max-width: 250px;
+	width: 100%;
+	margin: 20px;
+	text-align: left;
+	h3 {
+		margin-bottom: 20px;
 	}
-})
-Socket.on("login", (data: any)=>{
-	if (data.error) {
-		Feedback.show(data.error, "error");
-	}
-	else {
-		Feedback.show(data.success, "success")
-	}
-})
-Socket.emit("login", {
-	_id: "N090041",
-	password: "iiitn123"
-});;
+`;
 
 export let Login = (props: any)=>{
 	return <>
@@ -38,13 +41,12 @@ export let Login = (props: any)=>{
 				Login
 			</Button>
 		</NavBar>
-		<div className="loginPage">
-			<Div card="2" className="login">
+		<LoginPage>
+			<Div card="2" className={form}>
 				<Form onSubmit={(login: any)=>{
-					alert(login);
 					
 				}}>
-					<h3 className="title">Login</h3>
+					<h3>Login</h3>
 					<TextField name="_id">
 						Username
 					</TextField>
@@ -54,10 +56,10 @@ export let Login = (props: any)=>{
 					<input type="submit" value="Login" />
 				</Form>
 			</Div>
-			<Div card="2" className="register">
+			<Div card="2" className={form}>
 				<Form schema={UserSchema} onSubmit={(data: any)=>{
 				}}>
-					<h3 className="title">Register</h3>
+					<h3>Register</h3>
 					<TextField name="_id" label="Username" />
 					<TextField name="name" label="Name"></TextField>
 					<TextField name="password" label="Password" type="password"></TextField>
@@ -70,6 +72,6 @@ export let Login = (props: any)=>{
 					<input type="submit" value="Register" />
 				</Form>
 			</Div>
-		</div>
+		</LoginPage>
 	</>;
 }

@@ -3,7 +3,7 @@ var path = require('path');
 
 module.exports = {
 	entry: {
-		bundle: './index.tsx'
+		bundle: './App/index.tsx'
 	},
 	
 	output: {
@@ -29,6 +29,11 @@ module.exports = {
 		]
 	},
 	resolve: {
+		alias: {
+			'App': path.resolve(__dirname, "App/"),
+			'Server': path.resolve(__dirname, "Server/"),
+			'Schema': path.resolve(__dirname, "Schema/")
+		},
 		extensions: [".tsx", ".ts", ".js"]
 	},
 	plugins: [
