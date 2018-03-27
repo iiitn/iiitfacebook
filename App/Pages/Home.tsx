@@ -5,6 +5,8 @@ import { Dropdown, DItem } from "classui/Components/Dropdown";
 import { Wall } from "./Components/Wall";
 import { OnlineList } from "./Components/OnlineList";
 import { styled, css } from "classui/Emotion";
+import { connect } from "react-redux";
+import { IState, Dispatch } from "App/State";
 
 let onlineWidth = 200;
 let navbar = css`
@@ -48,15 +50,22 @@ let onlineCss = css`
 	}
 `;
 
-export let Home = (props: any)=>{
+interface IHomeProps {
+	userid: IState["user"]["userid"]
+}
+let _Home = (props: IHomeProps)=>{
 	return <>
 		<NavBar logo="IIITFacebook" className={navbar} width={1024} dummy>
 			<NavbarRemain />
 			<Button to="/home">
 				Home
 			</Button>
-			<Button to="/login">
-				Login
+			<Button to="/login" onClick={()=>{
+				Dispatch({
+					type: "USER_LOGOUT"
+				});
+			}}>
+				{props.userid?"Logout : "+props.userid:"Login"}
 			</Button>
 		</NavBar>
 		<Content>
@@ -71,3 +80,8 @@ export let Home = (props: any)=>{
 		<OnlineList className={onlineCss}/>
 	</>;
 }
+export let Home = connect((state: IState)=>{
+	return {
+		userid: state.user.userid
+	}
+})(_Home);

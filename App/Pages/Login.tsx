@@ -5,6 +5,7 @@ import { Form, Checkbox, Radio } from "classui/Components/Form";
 import { UserSchema } from "../../Schema/User";
 import { Socket } from "../Network";
 import { styled, css } from "classui/Emotion";
+import { Dispatch } from "App/State";
 
 let LoginPage = styled('div')`
 	max-width: 1024px;
@@ -43,14 +44,22 @@ export let Login = (props: any)=>{
 		</NavBar>
 		<LoginPage>
 			<Div card="2" className={form}>
-				<Form onSubmit={(login: any)=>{
-					
+				<Form onSubmit={(data: any)=>{
+					console.log(data);
+					Socket.request({
+						type: "USER_LOGIN",
+						...data
+					}).then((action: any)=>{
+						Dispatch(action);
+					}).catch((msg)=>{
+						Feedback.show(msg, "error");
+					});
 				}}>
 					<h3>Login</h3>
 					<TextField name="_id">
 						Username
 					</TextField>
-					<TextField name="Password">
+					<TextField name="password">
 						Password
 					</TextField>
 					<input type="submit" value="Login" />
@@ -58,6 +67,14 @@ export let Login = (props: any)=>{
 			</Div>
 			<Div card="2" className={form}>
 				<Form schema={UserSchema} onSubmit={(data: any)=>{
+					Socket.request({
+						type: "USER_REGISTER",
+						...data
+					}).then((msg)=>{
+						Feedback.show(msg as string, "success");
+					}).catch((msg)=>{
+						Feedback.show(msg, "error");
+					});
 				}}>
 					<h3>Register</h3>
 					<TextField name="_id" label="Username" />

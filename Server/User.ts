@@ -19,16 +19,22 @@ export class User {
 		console.log("Request : ", data);
 		switch(data.type) {
 			case "USER_LOGIN": {
-				return Database.collection("user").find(data.userid).then((udata: any)=>{
+				return Database.collection("user").find(data._id).then((udata: any)=>{
 					console.log("Data FROM DATABASE : ", udata);
 					if (udata.password==data.password) {
-						return Promise.resolve("Successfully logged in.");
+						return Promise.resolve({
+							type: "USER_LOGIN",
+							userid: data._id
+						});
 					}
 					return Promise.reject("Login Failed.");
 				});
 			}
 			case "USER_REGISTER": {
-				return Promise.resolve("Registered.");
+				return Database.collection("user").insert(data, UserSchema)
+				.then(()=>{
+					return Promise.resolve("USer Successfully registered.");
+				});
 			}
 		}
 		return Promise.reject("Specified action not found.");	

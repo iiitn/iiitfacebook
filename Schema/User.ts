@@ -21,8 +21,8 @@ export let UserSchema: IJSONSchema = {
 }
 
 interface IUserSchema {
-	username: string
+	_id: string
 	name: string
 	password: string
-	age: number
+	gender: "male"|"female"
 }

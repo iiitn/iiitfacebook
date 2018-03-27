@@ -10,8 +10,12 @@ export interface IRequest {
 
 export type IRequestData = {
 	type: "USER_LOGIN"
-	userid: string
+	_id: string
 	password: string
 } | {
 	type: "USER_REGISTER"
+	_id: string
+	name: string
+	password: string
+	gender: "male"|"female"
 }
