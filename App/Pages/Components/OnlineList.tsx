@@ -29,11 +29,10 @@ let _OnlineList = (props: IOnlineProps)=>{
 		<hr style={{opacity: 0.3}}/>
 		{
 			props.users.map(u=>
-				<div key={u} className="item">{u}</div>
+				<EItem key={u} className={cx(Hoverable(), {
+				})}>{u}</EItem>
 			)
 		}
-		<EItem className={cx(Hoverable(), {
-		})}>Kishore</EItem>
 	</Div>;
 }
 

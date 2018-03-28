@@ -18,4 +18,6 @@ export type IRequestData = {
 	name: string
 	password: string
 	gender: "male"|"female"
+} | {
+	type: "USER_LOGOUT"
 }

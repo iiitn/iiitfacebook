@@ -7,6 +7,7 @@ import { OnlineList } from "./Components/OnlineList";
 import { styled, css } from "classui/Emotion";
 import { connect } from "react-redux";
 import { IState, Dispatch } from "App/State";
+import { Socket } from "App/Network";
 
 let onlineWidth = 200;
 let navbar = css`
@@ -61,9 +62,11 @@ let _Home = (props: IHomeProps)=>{
 				Home
 			</Button>
 			<Button to="/login" onClick={()=>{
-				Dispatch({
+				Socket.request({
 					type: "USER_LOGOUT"
-				});
+				}).then((action: any)=>{
+					Dispatch(action);
+				})
 			}}>
 				{props.userid?"Logout : "+props.userid:"Login"}
 			</Button>

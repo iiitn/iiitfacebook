@@ -42,7 +42,7 @@ class _Socket {
 		this.socket.on("disconnect", func);
 	}
 
-	on(ev: string, func: ()=>void) {
+	on(ev: string, func: (data: any)=>void) {
 		this.socket.on(ev, func);
 	}
 	off(ev: string, func?: any) {

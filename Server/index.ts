@@ -21,7 +21,7 @@ App.get("*",(req,res)=>{
 	res.sendFile(path.resolve("./index.html"));
 });
 
-let IO = SocketIO(httpServer);
+export let IO = SocketIO(httpServer);
 
 let users: string[] = [];
 IO.on("connection", (socket)=>{

@@ -17,15 +17,17 @@ let EWall = styled('div')`
 		margin-top: 10px;
 	}
 	> .comments {
+		display: none;
 		margin-top: 10px;
-		background-color: grey;
+		//background-color: grey;
 	}
 `;
 let Content = styled('div')`
 	margin-top: 10px;
-	display: flex;
+	display: inline-flex;
+	padding: 0px 5px;
 	width: 100%;
-	background-color: aliceblue;
+	//background-color: aliceblue;
 	min-height: 100px;
 	align-items: center;
 	line-height: 1.7;
@@ -48,6 +50,10 @@ let Head = styled('div')`
 		> .posted_by {
 			font-weight: 900;
 			color: ${p=>p.theme.colorDark};
+			cursor: pointer;
+			&:hover {
+				opacity: 0.7;
+			}
 		}
 		> .time {
 			color: #a8a8a8;
@@ -62,7 +68,7 @@ export class Wall extends React.Component<IProps, IState> {
 			<Head>
 				<div className="image"></div>
 				<div className="details">
-					<div className="posted_by">Kishore</div>
+					<span className="posted_by">Kishore</span>
 					<div className="time">Just now.</div>
 				</div>
 				<Dropdown button={<i className="fa fa-angle-double-down"></i>} btnProps={{className: "flat", style: {padding: "5px 7px"}}} push="left">

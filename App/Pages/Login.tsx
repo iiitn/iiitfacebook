@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavBar, NavbarRemain } from "classui";
+import { NavBar, NavbarRemain, ClassUI } from "classui";
 import { Button, Div, TextField, Feedback } from "classui/Components";
 import { Form, Checkbox, Radio } from "classui/Components/Form";
 import { UserSchema } from "../../Schema/User";
@@ -50,6 +50,7 @@ export let Login = (props: any)=>{
 						type: "USER_LOGIN",
 						...data
 					}).then((action: any)=>{
+						ClassUI.history.push("/home");
 						Dispatch(action);
 					}).catch((msg)=>{
 						Feedback.show(msg, "error");

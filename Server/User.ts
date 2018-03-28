@@ -3,10 +3,15 @@ import { IRequest, IResponse, IRequestData } from '../Schema/Common';
 import { Promise } from 'es6-promise';
 import { Database } from './Database';
 import { UserSchema } from '../Schema/User';
+import _ = require('lodash');
+import { IO } from './index';
 
 export class User {
+	private static onlineList: string[] = [];
+	private userid?: string;
 	private _socket: SocketIO.Socket;
 	private _requests: IRequest[] = [];
+
 	constructor(socket: SocketIO.Socket) {
 		this._socket = socket;
 
@@ -14,6 +19,7 @@ export class User {
 			this._requests.push(request);
 			this._process();
 		});
+		this._socket.on("disconnect", this.disConnect.bind(this));
 	}
 	processRequest(data: IRequestData): Promise<any> {
 		console.log("Request : ", data);
@@ -22,6 +28,16 @@ export class User {
 				return Database.collection("user").find(data._id).then((udata: any)=>{
 					console.log("Data FROM DATABASE : ", udata);
 					if (udata.password==data.password) {
+						User.onlineList.push(data._id);
+						this.userid = data._id;
+						Database.collection("user").findAll({}, {_id: true}).then((data)=>{
+							let users = _.map(data, "_id");
+							IO.emit("PASSIVE_ACTION", {
+								type: "ONLINE_UPDATE",
+								users: users,
+								online: User.onlineList
+							})
+						})
 						return Promise.resolve({
 							type: "USER_LOGIN",
 							userid: data._id
@@ -36,11 +52,35 @@ export class User {
 					return Promise.resolve("USer Successfully registered.");
 				});
 			}
+			case "USER_LOGOUT": {
+				User.onlineList = User.onlineList.filter(id=>id!=this.userid);
+				this.userid = undefined;
+				Database.collection("user").findAll({}, {_id: true}).then((data)=>{
+					let users = _.map(data, "_id");
+					IO.emit("PASSIVE_ACTION", {
+						type: "ONLINE_UPDATE",
+						users: users,
+						online: User.onlineList
+					});
+				})		
+				return Promise.resolve({
+					type: "USER_LOGOUT"
+				})
+			}
 		}
 		return Promise.reject("Specified action not found.");	
 	}
 	disConnect() {
+		User.onlineList = User.onlineList.filter(id=>id!=this.userid);
 		this._socket.removeAllListeners("request");
+		Database.collection("user").findAll({}, {_id: true}).then((data)=>{
+			let users = _.map(data, "_id");
+			IO.emit("PASSIVE_ACTION", {
+				type: "ONLINE_UPDATE",
+				users: users,
+				online: User.onlineList
+			});
+		})
 	}
 
 
