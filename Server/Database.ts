@@ -1,6 +1,7 @@
 import * as mongodb from 'mongodb';
 import {Promise} from 'es6-promise';
 import { IJSONSchema, Schema } from 'classui/Components/Form/Schema';
+import _ = require('lodash');
 
 class _Database {
 	private _database?: mongodb.Db;
@@ -11,6 +12,9 @@ class _Database {
 				return;
 			}
 			this._database = res.db(db);
+			let collection = this.collection("user").findAll({}).then((data)=>{
+				console.log(data);
+			})
 		});
 	}
 	collection(name: string) {
@@ -57,6 +61,21 @@ class Collection {
 				resolve(d);
 			}).catch(()=>{
 				reject("Error getting the document.");
+			});
+		});
+	}
+	findAll(criteria: any, fields?: {[id: string]: boolean}) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database.");
+			}
+			this.collection.find(criteria, {
+				projection: fields
+			}).toArray((err, docs)=>{
+				if (err) {
+					return reject("Error getting documents from collection.");
+				}
+				resolve(docs);
 			});
 		});
 	}
