@@ -12,9 +12,6 @@ class _Database {
 				return;
 			}
 			this._database = res.db(db);
-			let collection = this.collection("user").findAll({}).then((data)=>{
-				console.log(data);
-			})
 		});
 	}
 	collection(name: string) {
