@@ -1,14 +1,19 @@
+import { IAction } from "App/State/Reducers/RootReducer";
+import { IPassiveAction } from "App/PassiveAction";
+
 export interface IResponse {
 	res_id: number
 	error?: string
 	data: any
 }
+export type IResponseData = IAction | string | IPassiveAction;
+
 export interface IRequest {
 	req_id: number
-	data: IRequestData
+	action: IRequestAction
 }
 
-export type IRequestData = {
+export type IRequestAction = {
 	type: "USER_LOGIN"
 	_id: string
 	password: string
@@ -20,4 +25,7 @@ export type IRequestData = {
 	gender: "male"|"female"
 } | {
 	type: "USER_LOGOUT"
+} | {
+	type: "SEND_MESSAGE"
+	userid: string
 }

@@ -1,7 +1,7 @@
 import {connect} from 'socket.io-client';
 import { Dispatch, store } from './State';
 import {Promise} from 'es6-promise';
-import { IResponse, IRequest, IRequestData } from 'Schema/Common';
+import { IResponse, IRequest, IRequestAction } from 'Schema/Common';
 
 let g_req_id = 0;
 class _Socket {
@@ -42,6 +42,10 @@ class _Socket {
 		this.socket.on("disconnect", func);
 	}
 
+	set onPassiveAction(func: (data: any)=>void) {
+		this.socket.on("PASSIVE_ACTION", func);
+	}
+
 	on(ev: string, func: (data: any)=>void) {
 		this.socket.on(ev, func);
 	}
@@ -49,7 +53,7 @@ class _Socket {
 		this.socket.off(ev, func);
 	}
 
-	request(data: IRequestData) {
+	request(data: IRequestAction) {
 		// Send a Socket.IO request.
 		return new Promise((resolve, reject)=>{
 			let rid = g_req_id++;
@@ -59,7 +63,7 @@ class _Socket {
 			};
 			this.socket.emit("request", {
 				req_id: rid,
-				data: data
+				action: data
 			} as IRequest);
 
 			setTimeout(()=>{
