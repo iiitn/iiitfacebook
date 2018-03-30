@@ -25,7 +25,5 @@ export let IO = SocketIO(httpServer);
 
 let users: string[] = [];
 IO.on("connection", (socket)=>{
-	let user = new User(socket);
-	console.log("User connection established.");
+	new User(socket);
 });
-

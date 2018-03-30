@@ -1,47 +1,72 @@
 import * as SocketIO from 'socket.io';
-import { IRequest, IResponse, IRequestData } from '../Schema/Common';
+import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
 import { Promise } from 'es6-promise';
 import { Database } from './Database';
 import { UserSchema } from '../Schema/User';
 import _ = require('lodash');
 import { IO } from './index';
+import { Connection } from './Connection';
 
-export class User {
-	private static onlineList: string[] = [];
+interface IUser {
+	[userid: string]: {
+		sockets: SocketIO.Socket[]
+	}|undefined
+}
+
+export class User extends Connection {
+	private static users: IUser = {};
 	private userid?: string;
-	private _socket: SocketIO.Socket;
-	private _requests: IRequest[] = [];
 
 	constructor(socket: SocketIO.Socket) {
-		this._socket = socket;
-
-		this._socket.addListener("request", (request: IRequest)=>{
-			this._requests.push(request);
-			this._process();
-		});
-		this._socket.on("disconnect", this.disConnect.bind(this));
+		super(socket);
 	}
-	processRequest(data: IRequestData): Promise<any> {
-		console.log("Request : ", data);
+
+	setUserID(userid: string) {
+		this.rmSocket();
+		this.userid = userid;
+		let user = User.users[userid];
+		if (user) {
+			user.sockets.push(this._socket);
+			return;
+		}
+		User.users[userid] = {
+			sockets: [this._socket]
+		};
+	}
+	rmSocket() {
+		if (!this.userid) {
+			return;
+		}
+		let user = User.users[this.userid];
+		if (user) {
+			user.sockets = user.sockets.filter(s=>s!=this._socket);
+			if (user.sockets.length==0) {
+				delete User.users[this.userid];
+			}
+			return;
+		}
+		// DO NOTHING.
+	}
+	passiveAction(data: IResponseData, users = Object.keys(User.users)) {
+		users.forEach(u=>{
+			let user = User.users[u];
+			if (user) {
+				user.sockets.forEach(s=>s.emit("PASSIVE_ACTION", data));
+			}
+		});
+	}
+
+	processRequest(data: IRequestAction): Promise<IResponseData> {
 		switch(data.type) {
 			case "USER_LOGIN": {
 				return Database.collection("user").find(data._id).then((udata: any)=>{
-					console.log("Data FROM DATABASE : ", udata);
 					if (udata.password==data.password) {
-						User.onlineList.push(data._id);
-						this.userid = data._id;
-						Database.collection("user").findAll({}, {_id: true}).then((data)=>{
-							let users = _.map(data, "_id");
-							IO.emit("PASSIVE_ACTION", {
-								type: "ONLINE_UPDATE",
-								users: users,
-								online: User.onlineList
-							})
-						})
+						this.setUserID(data._id);
+						this.broadCastOnlineList();
 						return Promise.resolve({
 							type: "USER_LOGIN",
 							userid: data._id
-						});
+						} as IResponseData);
 					}
 					return Promise.reject("Login Failed.");
 				});
@@ -53,65 +78,34 @@ export class User {
 				});
 			}
 			case "USER_LOGOUT": {
-				User.onlineList = User.onlineList.filter(id=>id!=this.userid);
-				this.userid = undefined;
-				Database.collection("user").findAll({}, {_id: true}).then((data)=>{
-					let users = _.map(data, "_id");
-					IO.emit("PASSIVE_ACTION", {
-						type: "ONLINE_UPDATE",
-						users: users,
-						online: User.onlineList
-					});
-				})		
+				this.rmSocket();
+				this.broadCastOnlineList();
 				return Promise.resolve({
 					type: "USER_LOGOUT"
-				})
+				} as IResponseData);
+			}
+			case "SEND_MESSAGE": {
+				this.passiveAction({
+					type: "PASSIVE_MESSAGE",
+					from: this.userid as string
+				}, [data.userid]);
+				return Promise.resolve("Done");
 			}
 		}
 		return Promise.reject("Specified action not found.");	
 	}
-	disConnect() {
-		User.onlineList = User.onlineList.filter(id=>id!=this.userid);
-		this._socket.removeAllListeners("request");
+	broadCastOnlineList() {
+		// Broadcast.
 		Database.collection("user").findAll({}, {_id: true}).then((data)=>{
 			let users = _.map(data, "_id");
-			IO.emit("PASSIVE_ACTION", {
+			this.passiveAction({
 				type: "ONLINE_UPDATE",
 				users: users,
-				online: User.onlineList
+				online: Object.keys(User.users)
 			});
-		})
+		});
 	}
-
-
-	private _processing = false;
-	_process() {
-		if (this._processing) {
-			return;
-		}
-		// Get request from queue.
-		let request = this._requests.shift();
-		if (!request) {
-			// No requests found.
-			return;
-		}
-
-		// Request found. Start processing.
-		this._processing = true;
-		let req_id = request.req_id;
-		this.processRequest(request.data).then((data)=>{
-			this._socket.emit("response", {
-				res_id: req_id,
-				data
-			} as IResponse);
-		}).catch((err)=>{
-			this._socket.emit("response", {
-				res_id: req_id,
-				error: err
-			} as IResponse);
-		}).finally(()=>{
-			this._processing = false;
-			this._process();
-		})
+	disconnect() {
+		this.rmSocket();
 	}
 }
