@@ -1,7 +1,8 @@
 import * as React from "react";
 import { NavBar, NavbarRemain, ClassUI } from "classui";
 import { Button, Div, TextField, Feedback } from "classui/Components";
-import { Form, Checkbox, Radio } from "classui/Components/Form";
+import { Form, Checkbox, Radio, Select } from "classui/Components/Form";
+import { Submit } from 'classui/Components/Form/Submit';
 import { UserSchema } from "../../Schema/User";
 import { Socket } from "../Network";
 import { styled, css } from "classui/Emotion";
@@ -63,7 +64,7 @@ export let Login = (props: any)=>{
 					<TextField name="password">
 						Password
 					</TextField>
-					<input type="submit" value="Login" />
+					<Submit />
 				</Form>
 			</Div>
 			<Div card="2" className={form}>
@@ -80,6 +81,9 @@ export let Login = (props: any)=>{
 					<h3>Register</h3>
 					<TextField name="_id" label="Username" />
 					<TextField name="name" label="Name"></TextField>
+					<Select label="Batch" name="batch" nonEditable options={(UserSchema as any).properties["batch"].enum}></Select>
+					<Select label="Branch" name="branch" inline width="50%" nonEditable options={(UserSchema as any).properties["branch"].enum}></Select>
+					<Select top label="Class" name="class" inline width="50%" nonEditable options={(UserSchema as any).properties["class"].enum}></Select>
 					<TextField name="password" label="Password" type="password"></TextField>
 					<Div style={{marginBottom: 10}}>
 						<Radio name="gender" inline values={[
@@ -87,7 +91,8 @@ export let Login = (props: any)=>{
 							{label: "Female", value: "female"}
 						]} />
 					</Div>
-					<input type="submit" value="Register" />
+					<Checkbox name="agree">I agree to terms and conditions.</Checkbox>
+					<Submit/>
 				</Form>
 			</Div>
 		</LoginPage>

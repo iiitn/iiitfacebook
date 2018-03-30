@@ -18,7 +18,7 @@ export class App extends React.Component<IProps, any>
 		<ClassUI className={css`
 			display: flex;
 			flex-direction: column;
-		`} fullHeight EnableRouting>
+		`} fullHeight EnableRouting theme="offline">
 			<Switch>
 				<Route exact path="/home" component={Home}/>
 				<Route component={Login}/>
