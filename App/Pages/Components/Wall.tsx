@@ -3,9 +3,13 @@ import * as ReactDOM from 'react-dom';
 import { Div, Button } from 'classui/Components';
 import { Dropdown, DItem } from 'classui/Components/Dropdown';
 import { styled } from 'classui/Emotion';
+import { IWallState } from 'App/State/Reducers/WallReducer';
+import { connect } from 'react-redux';
+import { IRootState } from 'App/State';
 
 interface IProps {
 	className?: string
+	wallid: string
 };
 interface IState {};
 
@@ -62,14 +66,14 @@ let Head = styled('div')`
 	}
 `;
 
-export class Wall extends React.Component<IProps, IState> {
+export class _Wall extends React.Component<IProps & IWallState, IState> {
 	render() {
 		return <EWall className={this.props.className}>
 			<Head>
 				<div className="image"></div>
 				<div className="details">
-					<span className="posted_by">Kishore</span>
-					<div className="time">Just now.</div>
+					<span className="posted_by">{this.props.postedBy}</span>
+					<div className="time">{this.props.postedOn}</div>
 				</div>
 				<Dropdown button={<i className="fa fa-angle-double-down"></i>} btnProps={{className: "flat", style: {padding: "5px 7px"}}} push="left">
 					<DItem>Report Abuse</DItem>
@@ -78,8 +82,7 @@ export class Wall extends React.Component<IProps, IState> {
 				</Dropdown>
 			</Head>
 			<Content>
-				HeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHeyHey.
-				This is very long text.
+				{this.props.content}
 			</Content>
 			<div className="options">
 				<Button style={{display: "inline-block"}} className="flat">Like</Button>
@@ -89,3 +92,7 @@ export class Wall extends React.Component<IProps, IState> {
 
 	}
 }
+
+export let Wall = connect((state: IRootState, ownProps: IProps)=>{
+	return state.walls[ownProps.wallid]
+})(_Wall);

@@ -1,16 +1,18 @@
+
 export interface IWallState {
-	[id:string]: {
-		postedOn : string
-		postedBy : string
-		content : string
-		liked : boolean
-		nLikes : number
-		comments : {
-			cid : string
-			liked  :boolean
-			text : string
-		}[]
-	}
+	postedOn : string
+	postedBy : string
+	content : string
+	liked : boolean
+	nLikes : number
+	comments : {
+		cid : string
+		liked  :boolean
+		text : string
+	}[]
+}
+export interface IWallsState {
+	[id:string]: IWallState
 }
 
 export type IWallAction = {
@@ -48,11 +50,11 @@ export type IWallAction = {
 	cid : string
 }
 
-let defaultState:IWallState = {
+let defaultState:IWallsState = {
 	
 } 
 
-export let WallReducer = (state : IWallState = defaultState, action : IWallAction)=> {
+export let WallReducer = (state : IWallsState = defaultState, action : IWallAction)=> {
 	switch(action.type) {
 		case "WALL_ADD" : {
 			state = {

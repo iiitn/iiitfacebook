@@ -6,6 +6,8 @@ import { UserSchema } from '../Schema/User';
 import _ = require('lodash');
 import { IO } from './index';
 import { Connection } from './Connection';
+import { v4 } from 'uuid';
+import { WallSchema, IWallSchema } from '../Schema/Wall';
 
 interface IUser {
 	[userid: string]: {
@@ -83,6 +85,39 @@ export class User extends Connection {
 				return Promise.resolve({
 					type: "USER_LOGOUT"
 				} as IResponseData);
+			}
+		}
+
+		if(!this.userid) {
+			return Promise.reject("User not logged in yet to perform the action");
+		}
+		switch(data.type) {
+			case "WALL_ADD" : {
+				let wallid = v4();
+				return Database.collection("wall").insert({
+					_id: wallid,
+					postedOn: new Date().toString(),
+					comments: [],
+					postedBy: this.userid,
+					content: data.content,
+					likes: []
+				} as IWallSchema, WallSchema).then(()=>{
+					let action: IResponseData = {
+						type: "WALL_ADD",
+						id: wallid,
+						postedOn: new Date().toString(),
+						postedBy: this.userid as string,
+						content: data.content
+					};
+					this.passiveAction(action);
+					this.passiveAction({
+						type: "ADD_POST",
+						post_id: wallid
+					});
+					return Promise.resolve(action);
+				}).catch((msg)=>{
+					return Promise.reject(msg)
+				});
 			}
 			case "SEND_MESSAGE": {
 				this.passiveAction({

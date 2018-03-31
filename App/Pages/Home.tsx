@@ -1,13 +1,14 @@
 import * as React from "react";
 import { NavBar, NavbarRemain } from "classui";
-import { Button, Div, TextField } from "classui/Components";
+import { Button, Div, TextField, Feedback } from "classui/Components";
 import { Dropdown, DItem } from "classui/Components/Dropdown";
 import { Wall } from "./Components/Wall";
 import { OnlineList } from "./Components/OnlineList";
 import { styled, css } from "classui/Emotion";
 import { connect } from "react-redux";
-import { IState, Dispatch } from "App/State";
+import { IRootState, Dispatch } from "App/State";
 import { Socket } from "App/Network";
+import _ = require("lodash");
 
 let onlineWidth = 200;
 let navbar = css`
@@ -52,7 +53,8 @@ let onlineCss = css`
 `;
 
 interface IHomeProps {
-	userid: IState["user"]["userid"]
+	userid: IRootState["user"]["userid"]
+	allPosts: IRootState["user"]["all_posts"]
 }
 let _Home = (props: IHomeProps)=>{
 	return <>
@@ -73,18 +75,31 @@ let _Home = (props: IHomeProps)=>{
 		</NavBar>
 		<Content>
 			<MContent>
-				<Wall className={css`
-					margin: auto;
-					width: 100%;
-					max-width: 400px;
-				`}/>
+				<input onKeyDown={(e)=>{
+					let value = (e.target as any).value;
+					if (e.keyCode==13) {
+						Socket.request({
+							type: "WALL_ADD",
+							content: value
+						}).then(()=>{
+							Feedback.show("Successfully posted", "success");
+						}).catch((err)=>{
+							Feedback.show(err, "error");
+						});
+						(e.target as any).value = "";
+					}
+				}}/>
+				{props.allPosts.map(p=>{
+					return <Wall wallid={p}/>
+				})}
 			</MContent>
 		</Content>
 		<OnlineList className={onlineCss}/>
 	</>;
 }
-export let Home = connect((state: IState)=>{
+export let Home = connect((state: IRootState)=>{
 	return {
-		userid: state.user.userid
+		userid: state.user.userid,
+		allPosts: _.reverse(state.user.all_posts)
 	}
 })(_Home);

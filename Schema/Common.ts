@@ -28,4 +28,13 @@ export type IRequestAction = {
 } | {
 	type: "SEND_MESSAGE"
 	userid: string
+} | {
+	type : "WALL_ADD"
+	content: string
+} | {
+	type: "WALL_DELETE"
+	id: string
+} | {
+	type: "WALL_LIKE"
+	id: string
 }

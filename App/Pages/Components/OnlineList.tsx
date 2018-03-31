@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Div } from 'classui/Components';
 import {cx, css, styled, Hoverable} from 'classui/Emotion/index';
 import { connect } from 'react-redux';
-import { IState } from '../../State';
+import { IRootState } from '../../State';
 import { BaseComponentProps } from 'classui/Components/BaseComponent';
 
 interface IOnlineProps {
@@ -36,7 +36,7 @@ let _OnlineList = (props: IOnlineProps)=>{
 	</Div>;
 }
 
-export let OnlineList = connect((state: IState)=>{
+export let OnlineList = connect((state: IRootState)=>{
 	return {
 		users: state.online.online
 	}
