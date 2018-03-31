@@ -9,7 +9,7 @@
 		"getclassui": "./getupdate.sh"
 	},
 	"dependencies": {
-		"classui": "file:/home/kishore/Dream/Class-UI/classui.tgz",
+		"classui": "*",
 		"es6-promise": "^4.2.4",
 		"express": "^4.16.3",
 		"mongodb": "^3.0.4",
