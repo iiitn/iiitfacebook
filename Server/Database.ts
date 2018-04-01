@@ -66,15 +66,60 @@ class Collection {
 			if (!this.collection) {
 				return reject("Couldn't connect to database.");
 			}
-			this.collection.find(criteria, {
-				projection: fields
-			}).toArray((err, docs)=>{
+			let query: mongodb.Cursor<any>;
+			if (_.isArray(criteria)) {
+				query = this.collection.find({
+					_id: {
+						$in: criteria
+					}
+				});
+			}
+			else {
+				query = this.collection.find(criteria, {
+					projection: fields
+				});
+			}
+			query.toArray((err, docs)=>{
 				if (err) {
 					return reject("Error getting documents from collection.");
 				}
 				resolve(docs);
 			});
 		});
+	}
+	updateKey(id: string, key: string, data: any) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database.");
+			}
+			this.collection.update({
+				_id: id
+			}, {
+				'$set': {
+					[key]: data
+				}
+			}).then(()=>{
+				return resolve("Succesfully updated");
+			});
+		});
+	}
+	addItem(find: any, key: string, data: any) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database");
+			}
+			this.collection.update(find, {
+				$addToSet: {
+					[key]: data
+				}
+			}, {
+				upsert: true
+			}).then(()=>{
+				resolve("Success.");
+			}).catch(()=>{
+				reject("Failure");
+			});
+		})
 	}
 }
 
