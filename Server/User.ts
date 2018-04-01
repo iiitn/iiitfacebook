@@ -2,7 +2,7 @@ import * as SocketIO from 'socket.io';
 import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
 import { Promise } from 'es6-promise';
 import { Database } from './Database';
-import { UserSchema } from '../Schema/User';
+import { UserSchema, IUserSchema } from '../Schema/User';
 import _ = require('lodash');
 import { IO } from './index';
 import { Connection } from './Connection';
@@ -39,11 +39,13 @@ export class User extends Connection {
 		if (!this.userid) {
 			return;
 		}
-		let user = User.users[this.userid];
+		let userid = this.userid;
+		this.userid = undefined;
+		let user = User.users[userid];
 		if (user) {
 			user.sockets = user.sockets.filter(s=>s!=this._socket);
 			if (user.sockets.length==0) {
-				delete User.users[this.userid];
+				delete User.users[userid];
 			}
 			return;
 		}
@@ -59,9 +61,12 @@ export class User extends Connection {
 	}
 
 	processRequest(data: IRequestAction): Promise<IResponseData> {
+		if (typeof data!="object") {
+			return Promise.reject("Malformed reuest found.");
+		}
 		switch(data.type) {
 			case "USER_LOGIN": {
-				return Database.collection("user").find(data._id).then((udata: any)=>{
+				return Database.collection("user").find(data._id).then((udata: IUserSchema)=>{
 					if (udata.password==data.password) {
 						this.setUserID(data._id);
 						this.broadCastOnlineList();
@@ -76,8 +81,11 @@ export class User extends Connection {
 			case "USER_REGISTER": {
 				return Database.collection("user").insert(data, UserSchema)
 				.then(()=>{
-					return Promise.resolve("USer Successfully registered.");
-				});
+					return Database.collection("user_ctg")
+						.addItem({_id: "iiit"}, `${data.batch}.${data.branch}.${data.class}`, data._id)
+						.then(()=>Promise.resolve("User Successfully registered."))
+						.catch(()=>Promise.reject("Unknown error in database."));
+				}).catch(()=>Promise.reject("Registration failed."));
 			}
 			case "USER_LOGOUT": {
 				this.rmSocket();
@@ -89,7 +97,7 @@ export class User extends Connection {
 		}
 
 		if(!this.userid) {
-			return Promise.reject("User not logged in yet to perform the action");
+			return Promise.reject("User isn't logged in.");
 		}
 		switch(data.type) {
 			case "WALL_ADD" : {
