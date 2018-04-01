@@ -9,6 +9,13 @@ import { Connection } from './Connection';
 import { v4 } from 'uuid';
 import { WallSchema, IWallSchema } from '../Schema/Wall';
 
+interface IUser_ctg {
+	[batch: string]: {
+		[branch: string]: {
+			[cls: string]: string[]
+		}
+	}
+}
 interface IUser {
 	[userid: string]: {
 		sockets: SocketIO.Socket[]
@@ -16,22 +23,39 @@ interface IUser {
 }
 
 export class User extends Connection {
+	private static user_ctg: IUser_ctg = {};
 	private static users: IUser = {};
 	private userid?: string;
+	private branch?: IUserSchema["branch"];
+	private batch?: IUserSchema["batch"];
+	private cls?: IUserSchema["class"];
 
 	constructor(socket: SocketIO.Socket) {
 		super(socket);
 	}
 
-	setUserID(userid: string) {
+	setUserID(userid: string, batch: IUserSchema["batch"], branch: IUserSchema["branch"], cls: IUserSchema["class"]) {
+		
 		this.rmSocket();
 		this.userid = userid;
-		let user = User.users[userid];
-		if (user) {
-			user.sockets.push(this._socket);
-			return;
+		this.batch = batch;
+		this.cls = cls;
+		this.branch = branch;
+
+		let path = `${batch}.${branch}.c${cls}`;
+		let categ = _.get(User.user_ctg, path) as any;
+		if (categ) {
+			categ = [...categ, this.userid];
+		}else {
+			categ = [this.userid];
 		}
-		User.users[userid] = {
+		_.set(User.user_ctg, path, categ);
+
+		let userSockets = User.users[this.userid];
+		if (userSockets) {
+			userSockets.sockets.push(this._socket);
+		}
+		User.users[this.userid] = {
 			sockets: [this._socket]
 		};
 	}
@@ -41,6 +65,14 @@ export class User extends Connection {
 		}
 		let userid = this.userid;
 		this.userid = undefined;
+
+		let path = `${this.batch}.${this.branch}.c${this.cls}`;
+		let categ = _.get(User.user_ctg, path) as any;
+		if (categ) {
+			categ = categ.filter((u: any)=>u!=userid);
+		}
+		_.set(User.user_ctg, path, categ);
+
 		let user = User.users[userid];
 		if (user) {
 			user.sockets = user.sockets.filter(s=>s!=this._socket);
@@ -51,12 +83,18 @@ export class User extends Connection {
 		}
 		// DO NOTHING.
 	}
-	passiveAction(data: IResponseData, users = Object.keys(User.users)) {
-		users.forEach(u=>{
-			let user = User.users[u];
-			if (user) {
-				user.sockets.forEach(s=>s.emit("PASSIVE_ACTION", data));
+	passiveAction(data: IResponseData, users?: string[]) {
+		console.log("PASSIVE ACTION : ", users, data);
+		if (!users) {
+			users =_.get(User.user_ctg, `${this.batch}.${this.branch}.c${this.cls}`) as any;
+			if (!users) {
+				users = [];
 			}
+		}
+		users.forEach((u: any)=>{
+			let userSockets = User.users[u];
+			if (userSockets)
+				userSockets.sockets.forEach((s: any)=>s.emit("PASSIVE_ACTION", data));
 		});
 	}
 
@@ -68,7 +106,7 @@ export class User extends Connection {
 			case "USER_LOGIN": {
 				return Database.collection("user").find(data._id).then((udata: IUserSchema)=>{
 					if (udata.password==data.password) {
-						this.setUserID(data._id);
+						this.setUserID(data._id,  udata.batch, udata.branch, udata.class);
 						this.broadCastOnlineList();
 						return Promise.resolve({
 							type: "USER_LOGIN",
@@ -76,7 +114,7 @@ export class User extends Connection {
 						} as IResponseData);
 					}
 					return Promise.reject("Login Failed.");
-				});
+				}).catch(()=>Promise.reject("LOgin Failed"));
 			}
 			case "USER_REGISTER": {
 				return Database.collection("user").insert(data, UserSchema)
@@ -139,12 +177,15 @@ export class User extends Connection {
 	}
 	broadCastOnlineList() {
 		// Broadcast.
+
 		Database.collection("user").findAll({}, {_id: true}).then((data)=>{
 			let users = _.map(data, "_id");
+			let online = _.get(User.user_ctg, `${this.batch}.${this.branch}.c${this.cls}`) as any;
+			console.log(User.user_ctg);
 			this.passiveAction({
 				type: "ONLINE_UPDATE",
 				users: users,
-				online: Object.keys(User.users)
+				online
 			});
 		});
 	}
