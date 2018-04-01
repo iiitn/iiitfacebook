@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"scss": "~/.yarn/bin/node-sass sass/main.scss bundle/classbook.css -w",
-		"start": "webpack-dev-server",
+		"compile": "./node_modules/.bin/webpack --config webpack.production.config.js",
 		"getclassui": "./getupdate.sh"
 	},
 	"dependencies": {
