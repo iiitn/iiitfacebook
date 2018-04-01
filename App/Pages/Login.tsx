@@ -59,9 +59,9 @@ export let Login = (props: any)=>{
 				}}>
 					<h3>Login</h3>
 					<TextField name="_id">
-						Username
+						University ID
 					</TextField>
-					<TextField name="password">
+					<TextField type="password" name="password">
 						Password
 					</TextField>
 					<Submit />
@@ -79,7 +79,7 @@ export let Login = (props: any)=>{
 					});
 				}}>
 					<h3>Register</h3>
-					<TextField name="_id" label="Username" />
+					<TextField name="_id" label="University ID" />
 					<TextField name="name" label="Name"></TextField>
 					<Select label="Batch" name="batch" nonEditable options={(UserSchema as any).properties["batch"].enum}></Select>
 					<Select label="Branch" name="branch" inline width="50%" nonEditable options={(UserSchema as any).properties["branch"].enum}></Select>

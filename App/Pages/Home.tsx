@@ -3,6 +3,7 @@ import { NavBar, NavbarRemain } from "classui";
 import { Button, Div, TextField, Feedback } from "classui/Components";
 import { Dropdown, DItem } from "classui/Components/Dropdown";
 import { Wall } from "./Components/Wall";
+import {AutoTextarea} from './Components/AutoTextarea';
 import { OnlineList } from "./Components/OnlineList";
 import { styled, css } from "classui/Emotion";
 import { connect } from "react-redux";
@@ -36,7 +37,7 @@ let Content = styled('div')`
 `;
 let MContent = styled('div')`
 	width: 100%;
-	max-width: 1024px;
+	max-width: 400px;
 	margin: auto;
 `;
 let onlineCss = css`
@@ -75,19 +76,26 @@ let _Home = (props: IHomeProps)=>{
 		</NavBar>
 		<Content>
 			<MContent>
-				<input onKeyDown={(e)=>{
-					let value = (e.target as any).value;
-					if (e.keyCode==13) {
-						Socket.request({
-							type: "WALL_ADD",
-							content: value
-						}).then(()=>{
-							Feedback.show("Successfully posted", "success");
-						}).catch((err)=>{
-							Feedback.show(err, "error");
+				<AutoTextarea className={css`
+					padding: 10px;
+					line-height: 1.4;
+					font-family: Arial;
+					font-size: 13px;
+					width: 100%;
+					min-height: 50px;
+					border: 1px solid grey;
+				`} onCtrlEnter={(value, ref)=>{
+					Socket.request({
+						type: "WALL_ADD",
+						content: value
+					}).then(()=>{
+						Feedback.show("Posted", "success");
+						ref.setState({
+							value: ""
 						});
-						(e.target as any).value = "";
-					}
+					}).catch((err)=>{
+						Feedback.show(err, "error");
+					})
 				}}/>
 				{props.allPosts.map(p=>{
 					return <Wall wallid={p}/>
