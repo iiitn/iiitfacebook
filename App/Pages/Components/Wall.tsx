@@ -6,6 +6,7 @@ import { styled } from 'classui/Emotion';
 import { IWallState } from 'App/State/Reducers/WallReducer';
 import { connect } from 'react-redux';
 import { IRootState } from 'App/State';
+import { cardStyles } from 'classui/Components/BaseComponent';
 
 interface IProps {
 	className?: string
@@ -14,8 +15,10 @@ interface IProps {
 interface IState {};
 
 let EWall = styled('div')`
+	${cardStyles["1"]};
 	background-color: white;
 	padding: 15px;
+	margin-top: 20px;
 
 	> .options {
 		margin-top: 10px;
@@ -32,7 +35,7 @@ let Content = styled('div')`
 	padding: 0px 5px;
 	width: 100%;
 	//background-color: aliceblue;
-	min-height: 100px;
+	min-height: 50px;
 	align-items: center;
 	line-height: 1.7;
 	font-size: 13px;
