@@ -1,5 +1,6 @@
 import { IAction } from "App/State/Reducers/RootReducer";
 import { IPassiveAction } from "App/PassiveAction";
+import { IUserSchema } from "Schema/User";
 
 export interface IResponse {
 	res_id: number
@@ -23,6 +24,9 @@ export type IRequestAction = {
 	name: string
 	password: string
 	gender: "male"|"female"
+	batch: IUserSchema["batch"]
+	branch: IUserSchema["branch"]
+	class: IUserSchema["class"]
 } | {
 	type: "USER_LOGOUT"
 } | {
