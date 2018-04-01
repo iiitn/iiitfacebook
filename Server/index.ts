@@ -10,12 +10,12 @@ import { User } from "./User";
 let App = express();
 let httpServer  = new http.Server(App);
 
-httpServer.listen(2002,()=> {
+httpServer.listen(80,()=> {
 	let address = httpServer.address();
 	console.log("Server listening on port  :"+ address.port);
 })
 
-App.use(express.static("./"));
+App.use(express.static("./bundle/"));
 
 App.get("*",(req,res)=>{
 	res.sendFile(path.resolve("./index.html"));
