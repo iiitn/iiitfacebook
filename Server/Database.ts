@@ -5,14 +5,21 @@ import _ = require('lodash');
 
 class _Database {
 	private _database?: mongodb.Db;
+	private promise: Promise<any>;
 	constructor(db: string) {
-		mongodb.MongoClient.connect("mongodb://127.0.0.1:27017", (err, res)=>{
-			if (err) {
-				console.log("Couldn't connect to database.");
-				return;
-			}
-			this._database = res.db(db);
-		});
+		this.promise = new Promise((resolve, reject)=>{
+			mongodb.MongoClient.connect("mongodb://127.0.0.1:27017", (err, res)=>{
+				if (err) {
+					console.log("Couldn't connect to database.");
+					return;
+				}
+				this._database = res.db(db);
+				resolve(this._database);
+			});
+		})
+	}
+	on() {
+		return this.promise;
 	}
 	collection(name: string) {
 		return new Collection(name, this._database);
@@ -35,7 +42,7 @@ class Collection {
 			let error = Schema.validate(schema, data);
 			if (error!=null) {
 				// Error is there inserting document.
-				reject("Invalid Data format. Please check the format.");
+				reject("Invalid Data format. "+error);
 			}
 			this.collection.insertOne(data).catch(()=>{
 				reject("Error inserting the document.");
