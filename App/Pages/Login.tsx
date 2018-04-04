@@ -83,7 +83,7 @@ export let Login = (props: any)=>{
 					<TextField name="name" label="Name"></TextField>
 					<Select label="Batch" name="batch" nonEditable options={(UserSchema as any).properties["batch"].enum}></Select>
 					<Select label="Branch" name="branch" inline width="50%" nonEditable options={(UserSchema as any).properties["branch"].enum}></Select>
-					<Select top label="Class" name="class" inline width="50%" nonEditable options={(UserSchema as any).properties["class"].enum}></Select>
+					<Select label="Class" name="class" inline width="50%" nonEditable options={(UserSchema as any).properties["class"].enum}></Select>
 					<TextField name="password" label="Password" type="password"></TextField>
 					<Div style={{marginBottom: 10}}>
 						<Radio name="gender" inline values={[

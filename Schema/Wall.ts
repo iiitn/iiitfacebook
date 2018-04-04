@@ -11,7 +11,7 @@ export let WallSchema: IJSONSchema = {
 			type: "string"
 		},
 		postedOn: {
-			type: "string",
+			type: "number",
 		},
 		content: {
 			type: "string",
@@ -30,7 +30,7 @@ export let WallSchema: IJSONSchema = {
 export interface IWallSchema {
 	_id: string
 	postedBy: string
-	postedOn: string
+	postedOn: number
 	content: string
 	likes: string[]
 	comments: any[]

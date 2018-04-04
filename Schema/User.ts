@@ -40,3 +40,11 @@ export interface IUserSchema {
 	class: "1"|"2"|"3"|"4"|"5"|"6"
 	branch: "CSE" | "ECE" | "MECHANICAL" | "CHEMICAL" | "MME" | "CIVIL"
 }
+
+export interface IUserCategSchema {
+	[batch: string]: {
+		[branch: string]: {
+			[cls: string]: string[]
+		}
+	}
+}
