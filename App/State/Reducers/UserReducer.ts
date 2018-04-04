@@ -1,6 +1,11 @@
+interface IOnlineUser {
+	name: string
+	id: string
+}
 
 export interface IUserState {
 	userid?: string
+	online: IOnlineUser[]
 
 	all_posts: string[]
 	walls_posted: string[]
@@ -9,6 +14,7 @@ export interface IUserState {
 
 let defaultState: IUserState = {
 	userid: undefined,
+	online: [],
 
 	all_posts: [],
 	walls_posted: [],
@@ -22,7 +28,10 @@ export type IUserAction = {
 } | {
 	type: "ADD_POST"
 	post_id: string
-};
+} | {
+	type: "ONLINE_UPDATE"
+	online: IUserState["online"]
+};;
 
 export let UserReducer = (state=defaultState, action: IUserAction)=>{
 	switch(action.type) {
@@ -47,6 +56,13 @@ export let UserReducer = (state=defaultState, action: IUserAction)=>{
 					...state.all_posts,
 					action.post_id
 				]
+			};
+			break;
+		}
+		case "ONLINE_UPDATE": {
+			state = {
+				...state,
+				online: action.online
 			};
 			break;
 		}

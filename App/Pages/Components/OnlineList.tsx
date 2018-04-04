@@ -8,7 +8,7 @@ import { Socket } from 'App/Network';
 
 interface IOnlineProps {
 	className?: string
-	users: string[]
+	users: IRootState["user"]["online"]
 }
 
 let EItem = styled('div')`
@@ -30,13 +30,13 @@ let _OnlineList = (props: IOnlineProps)=>{
 		<hr style={{opacity: 0.3}}/>
 		{
 			props.users.map(u=>
-				<EItem key={u} onClick={()=>{
+				<EItem key={u.id} onClick={()=>{
 					Socket.request({
 						type: "SEND_MESSAGE",
-						userid: u
+						userid: u.id
 					});
 				}} className={cx(Hoverable(), {
-				})}>{u}</EItem>
+				})}>{u.name}</EItem>
 			)
 		}
 	</Div>;
@@ -44,6 +44,6 @@ let _OnlineList = (props: IOnlineProps)=>{
 
 export let OnlineList = connect((state: IRootState)=>{
 	return {
-		users: state.online.online
+		users: state.user.online
 	}
 })(_OnlineList);
