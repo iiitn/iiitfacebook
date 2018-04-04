@@ -2,97 +2,142 @@ import * as SocketIO from 'socket.io';
 import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
 import { Promise } from 'es6-promise';
 import { Database } from './Database';
-import { UserSchema, IUserSchema } from '../Schema/User';
+import { UserSchema, IUserSchema, IUserCategSchema } from '../Schema/User';
 import _ = require('lodash');
 import { IO } from './index';
 import { Connection } from './Connection';
 import { v4 } from 'uuid';
 import { WallSchema, IWallSchema } from '../Schema/Wall';
+import { Schema } from 'classui/Components/Form/Schema';
+import * as moment from 'moment';
 
-interface IUser_ctg {
+interface IOnline_user_ctg {
 	[batch: string]: {
 		[branch: string]: {
 			[cls: string]: string[]
 		}
 	}
 }
-interface IUser {
+interface IOnlineUser {
 	[userid: string]: {
 		sockets: SocketIO.Socket[]
 	}|undefined
 }
+interface IUser {
+	name: IUserSchema["name"]
+	gender: IUserSchema["gender"]
+}
+interface IUsers {
+	[id: string]: IUser|undefined
+}
 
 export class User extends Connection {
-	private static user_ctg: IUser_ctg = {};
-	private static users: IUser = {};
-	private userid?: string;
-	private branch?: IUserSchema["branch"];
-	private batch?: IUserSchema["batch"];
-	private cls?: IUserSchema["class"];
+	private static users: IUsers = {};
+	private static user_ctg: IUserCategSchema = {};
+
+	private static users_online: IOnlineUser = {};
+	private static user_online_ctg: IOnline_user_ctg = {};
+
+	private loginDetails: {
+		userid: string
+		branch: IUserSchema["branch"]
+		batch: IUserSchema["batch"]
+		cls: IUserSchema["class"]
+	}|undefined = undefined;
 
 	constructor(socket: SocketIO.Socket) {
 		super(socket);
 	}
 
+	public static init() {
+		Database.on().then(()=>{
+			Database.collection("user").findAll({}, {
+				_id: true,
+				name: true,
+				gender: true
+			}).then((data: IUser[])=>{
+				data.forEach(u=>{
+					this.users[(u as any)._id] = {
+						gender: u.gender,
+						name: u.name
+					}
+				})
+				console.log(this.users);
+			});
+		}).then(()=>{
+			Database.collection("user_ctg").find("iiit").then((data)=>{
+				this.user_ctg = data.byBatch;
+			});
+		});
+	}
+	getNameByID(id: string) {
+		let user = User.users[id];
+		return user?user.name:id;
+	}
+
 	setUserID(userid: string, batch: IUserSchema["batch"], branch: IUserSchema["branch"], cls: IUserSchema["class"]) {
 		
 		this.rmSocket();
-		this.userid = userid;
-		this.batch = batch;
-		this.cls = cls;
-		this.branch = branch;
+		this.loginDetails = {
+			userid,
+			branch,
+			batch,
+			cls
+		};
 
 		let path = `${batch}.${branch}.c${cls}`;
-		let categ = _.get(User.user_ctg, path) as any;
+		let categ = _.get(User.user_online_ctg, path) as any;
 		if (categ) {
-			categ = [...categ, this.userid];
+			categ = [...categ, this.loginDetails.userid];
 		}else {
-			categ = [this.userid];
+			categ = [this.loginDetails.userid];
 		}
-		_.set(User.user_ctg, path, categ);
+		_.set(User.user_online_ctg, path, categ);
 
-		let userSockets = User.users[this.userid];
+		let userSockets = User.users_online[this.loginDetails.userid];
 		if (userSockets) {
 			userSockets.sockets.push(this._socket);
 		}
-		User.users[this.userid] = {
+		User.users_online[this.loginDetails.userid] = {
 			sockets: [this._socket]
 		};
 	}
 	rmSocket() {
-		if (!this.userid) {
+		if (!this.loginDetails) {
 			return;
 		}
-		let userid = this.userid;
-		this.userid = undefined;
+		let userid = this.loginDetails.userid;
 
-		let path = `${this.batch}.${this.branch}.c${this.cls}`;
-		let categ = _.get(User.user_ctg, path) as any;
+		let path = `${this.loginDetails.batch}.${this.loginDetails.branch}.c${this.loginDetails.cls}`;
+		this.loginDetails = undefined;
+		let categ = _.get(User.user_online_ctg, path) as any;
 		if (categ) {
 			categ = categ.filter((u: any)=>u!=userid);
 		}
-		_.set(User.user_ctg, path, categ);
+		_.set(User.user_online_ctg, path, categ);
 
-		let user = User.users[userid];
+		let user = User.users_online[userid];
 		if (user) {
 			user.sockets = user.sockets.filter(s=>s!=this._socket);
 			if (user.sockets.length==0) {
-				delete User.users[userid];
+				delete User.users_online[userid];
 			}
 			return;
 		}
 		// DO NOTHING.
 	}
 	passiveAction(data: IResponseData, users?: string[]) {
-		console.log("PASSIVE ACTION : ", users, data);
+		if (!this.loginDetails) {
+			return;
+		}
 		if (!users) {
-			users =_.get(User.user_ctg, `${this.batch}.${this.branch}.c${this.cls}`) as any;
+			users =_.get(User.user_online_ctg, `${this.loginDetails.batch}.${this.loginDetails.branch}.c${this.loginDetails.cls}`) as any;
 			if (!users) {
 				users = [];
 			}
 		}
 		users.forEach((u: any)=>{
-			let userSockets = User.users[u];
+			let userSockets = User.users_online[u];
 			if (userSockets)
 				userSockets.sockets.forEach((s: any)=>s.emit("PASSIVE_ACTION", data));
 		});
@@ -120,10 +165,10 @@ export class User extends Connection {
 				return Database.collection("user").insert(data, UserSchema)
 				.then(()=>{
 					return Database.collection("user_ctg")
-						.addItem({_id: "iiit"}, `${data.batch}.${data.branch}.${data.class}`, data._id)
+						.addItem({_id: "iiit"}, `byBatch.${data.batch}.${data.branch}.${data.class}`, data._id)
 						.then(()=>Promise.resolve("User Successfully registered."))
-						.catch(()=>Promise.reject("Unknown error in database."));
-				}).catch(()=>Promise.reject("Registration failed."));
+						.catch(()=>Promise.reject("Unknown error in database while registering."));
+				});
 			}
 			case "USER_LOGOUT": {
 				this.rmSocket();
@@ -134,25 +179,26 @@ export class User extends Connection {
 			}
 		}
 
-		if(!this.userid) {
+		if(!this.loginDetails) {
 			return Promise.reject("User isn't logged in.");
 		}
 		switch(data.type) {
 			case "WALL_ADD" : {
 				let wallid = v4();
+				let user = User.users[this.loginDetails.userid];
 				return Database.collection("wall").insert({
 					_id: wallid,
-					postedOn: new Date().toString(),
+					postedOn: new Date().getTime(),
 					comments: [],
-					postedBy: this.userid,
+					postedBy: this.loginDetails.userid,
 					content: data.content,
 					likes: []
 				} as IWallSchema, WallSchema).then(()=>{
 					let action: IResponseData = {
 						type: "WALL_ADD",
 						id: wallid,
-						postedOn: new Date().toString(),
-						postedBy: this.userid as string,
+						postedOn: moment(new Date().getTime()).calendar(),
+						postedBy: user?user.name:(this.loginDetails?this.loginDetails.userid:"" as string),
 						content: data.content
 					};
 					this.passiveAction(action);
@@ -168,7 +214,7 @@ export class User extends Connection {
 			case "SEND_MESSAGE": {
 				this.passiveAction({
 					type: "PASSIVE_MESSAGE",
-					from: this.userid as string
+					from: this.getNameByID(this.loginDetails.userid)
 				}, [data.userid]);
 				return Promise.resolve("Done");
 			}
@@ -179,13 +225,17 @@ export class User extends Connection {
 		// Broadcast.
 
 		Database.collection("user").findAll({}, {_id: true}).then((data)=>{
+			if (!this.loginDetails) {
+				return;
+			}
 			let users = _.map(data, "_id");
-			let online = _.get(User.user_ctg, `${this.batch}.${this.branch}.c${this.cls}`) as any;
-			console.log(User.user_ctg);
+			let online = _.get(User.user_online_ctg, `${this.loginDetails.batch}.${this.loginDetails.branch}.c${this.loginDetails.cls}`) as any as string[];
 			this.passiveAction({
 				type: "ONLINE_UPDATE",
-				users: users,
-				online
+				online: online.map(o=>({
+					name: this.getNameByID(o),
+					id: o
+				}))
 			});
 		});
 	}
@@ -193,3 +243,4 @@ export class User extends Connection {
 		this.rmSocket();
 	}
 }
+User.init();
