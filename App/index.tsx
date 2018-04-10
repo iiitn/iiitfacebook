@@ -5,6 +5,7 @@ import { Socket } from 'App/Network';
 import { Dispatch } from 'App/State';
 import { ClassUI } from 'classui/ClassUI';
 import { PassiveAction } from 'App/PassiveAction';
+import 'es6-promise/auto';
 
 Socket.onConnect = ()=>ClassUI.setTheme("flat");
 Socket.onDisconnect = ()=>ClassUI.setTheme("offline");

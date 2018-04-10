@@ -1,5 +1,4 @@
 import * as mongodb from 'mongodb';
-import {Promise} from 'es6-promise';
 import { IJSONSchema, Schema } from 'classui/Components/Form/Schema';
 import _ = require('lodash');
 

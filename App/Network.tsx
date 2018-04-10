@@ -1,7 +1,6 @@
 import {connect} from 'socket.io-client';
 import { Dispatch, store } from './State';
-import {Promise} from 'es6-promise';
-import { IResponse, IRequest, IRequestAction } from 'Schema/Common';
+import { IResponse, IRequest, IRequestAction, IResponseData } from 'Schema/Common';
 
 let g_req_id = 0;
 class _Socket {
@@ -25,7 +24,7 @@ class _Socket {
 					this._requests[res_id].reject(response.error);
 				}
 				else {
-					console.log("RESPONSE SUCCESS : ", response.data);
+					//console.log("RESPONSE SUCCESS : ", response.data);
 					this._requests[res_id].resolve(response.data);
 				}
 				delete this._requests[res_id];
@@ -53,7 +52,7 @@ class _Socket {
 		this.socket.off(ev, func);
 	}
 
-	request(data: IRequestAction) {
+	request(data: IRequestAction): Promise<IResponseData> {
 		// Send a Socket.IO request.
 		return new Promise((resolve, reject)=>{
 			let rid = g_req_id++;
@@ -70,6 +69,9 @@ class _Socket {
 				reject("Request timeout...");
 			}, 5000);
 		});
+	}
+	emit(ev: string, data: any) {
+		this.socket.emit(ev, data);
 	}
 }
 export let Socket = new _Socket();

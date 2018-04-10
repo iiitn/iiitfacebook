@@ -1,6 +1,5 @@
 import * as SocketIO from 'socket.io';
 import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
-import { Promise } from 'es6-promise';
 import { Database } from './Database';
 import { UserSchema, IUserSchema, IUserCategSchema } from '../Schema/User';
 import _ = require('lodash');
@@ -10,6 +9,7 @@ import { v4 } from 'uuid';
 import { WallSchema, IWallSchema } from '../Schema/Wall';
 import { Schema } from 'classui/Components/Form/Schema';
 import * as moment from 'moment';
+import { FileUpload } from './FileUpload';
 
 interface IOnline_user_ctg {
 	[batch: string]: {
@@ -176,6 +176,14 @@ export class User extends Connection {
 				return Promise.resolve({
 					type: "USER_LOGOUT"
 				} as IResponseData);
+			}
+			case "FILE_UPLOAD": {
+				return FileUpload.handleFileUpload(data).then((data)=>{
+					if (data.done) {
+						// Do something if necessary.
+					}
+					return data;
+				});
 			}
 		}
 
