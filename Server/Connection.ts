@@ -1,20 +1,16 @@
 import * as SocketIO from 'socket.io';
 import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
-import { Promise } from 'es6-promise';
+import { MAX_FILE_SIZE } from '../Schema/FileUpload';
 import { Database } from './Database';
 import { UserSchema } from '../Schema/User';
-import _ = require('lodash');
-import { IO } from './index';
 
-
+// 100 KB.
 export abstract class Connection {
 	protected _socket: SocketIO.Socket;
-	protected static _sockets: SocketIO.Socket[] = [];
 	private _requests: IRequest[] = [];
 
 	constructor(socket: SocketIO.Socket) {
 		this._socket = socket;
-		Connection._sockets.push(socket);
 
 		this._disconnect = this._disconnect.bind(this);
 		this._socket.addListener("request", (request: IRequest)=>{
@@ -45,25 +41,28 @@ export abstract class Connection {
 			this._process();
 			return;
 		}
+
+		let final = ()=>{
+			this._processing = false;
+			this._process();
+		};
 		this.processRequest(request.action).then((data)=>{
 			this._socket.emit("response", {
 				res_id: req_id,
 				data
 			} as IResponse);
+			final();
 		}).catch((err)=>{
 			this._socket.emit("response", {
 				res_id: req_id,
 				error: err
 			} as IResponse);
-		}).finally(()=>{
-			this._processing = false;
-			this._process();
-		})
+			final();
+		});
 	}
 
 	private _disconnect() {
 		this._socket.removeAllListeners();
-		Connection._sockets = Connection._sockets.filter(s=>s!=this._socket);
 		this.disconnect();
 	}
 
