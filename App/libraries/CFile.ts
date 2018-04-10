@@ -1,6 +1,17 @@
-import {Promise} from 'es6-promise';
+import { Socket } from 'App/Network';
+import { IFileUpload, IFileUploadResponse } from 'Schema/FileUpload';
+import { MAX_FILE_SIZE } from 'Schema/FileUpload';
 
+// KB per iteration.
+const FILE_UPLOAD_CHUNK_SIZE = 10;
 export class CFile {
+	private _upload: {
+		offset: number
+	} = {
+		offset: 0
+	};
+	// 250 KB max size.
+
 	private file: File;
 	private slice_offset = 0;
 
@@ -14,6 +25,9 @@ export class CFile {
 			type: file.type
 		}
 	}
+	getStats() {
+		return CFile.getStats(this.file);
+	}
 	getUrl() {
 		return new Promise<string>((resolve, reject)=>{
 			let reader = new FileReader();
@@ -24,33 +38,65 @@ export class CFile {
 			reader.readAsDataURL(this.file);
 		});
 	}
-	getStats() {
-		return CFile.getStats(this.file);
-	}
 	resetSliceIndex() {
 		this.slice_offset = 0;
 	}
-	getNextSlice(size=100) {
-		return new Promise<{
-			remain_size: number
-			buffer: any
-		}>((resolve, reject)=>{
-			if (this.slice_offset>=this.file.size) {
-				return reject("Done With All Slices.");
+	uploadFile(uploadStats?: (data: {id: string, percent: number})=>void) {
+		return new Promise(async (resolve, reject)=>{
+			let stats = CFile.getStats(this.file);
+			if (stats.size>=MAX_FILE_SIZE || stats.size<=0) {
+				return reject("Invalid file size. Maybe file size exceeded.");
 			}
-			let slice = this.file.slice(this.slice_offset, this.slice_offset+size);
-			console.log(slice);
-			this.slice_offset += size;
+
+			this._upload = {
+				offset: 0
+			};
+			let file_id: string|undefined = undefined;
+			while (true) {
+				try {
+					let remainSize = this.file.size - this._upload.offset;
+					let chunkSize = FILE_UPLOAD_CHUNK_SIZE*1024;
+
+					let upload_size = (remainSize>chunkSize)?chunkSize:remainSize;
+					if (upload_size<=0) {
+						return resolve("File Successfully uploaded");
+					}
+					let slice = await this.getSlice(this._upload.offset, upload_size);
+
+					this._upload.offset += upload_size;
+					let response: IFileUploadResponse = await Socket.request({
+						type: "FILE_UPLOAD",
+						id: file_id,
+						offset: this._upload.offset,
+						data: slice.buffer,
+						length: upload_size,
+						totalSize: this.file.size
+					}) as any;
+					file_id = response.id;
+					if (uploadStats) {
+						let percent = 100*(this._upload.offset*1.0/this.file.size);
+						uploadStats({
+							id: file_id,
+							percent
+						});
+					}
+				}
+				catch(e) {
+					reject("Couldn't upload file");
+				}
+			}
+		});
+	}
+	getSlice(offset: number, size: number) {
+		return new Promise<{
+			buffer: Buffer
+		}>((resolve, reject)=>{
+			let slice = this.file.slice(offset, offset+size);
 			let fr = new FileReader();
 			fr.readAsArrayBuffer(slice);
 			fr.onload = (evt)=>{
 				let buffer = fr.result;
-				let remain_size = this.file.size - this.slice_offset;
-				if (remain_size<=0) {
-					console.log("Sent whole file!!!");
-				}
 				resolve({
-					remain_size,
 					buffer
 				});
 			}

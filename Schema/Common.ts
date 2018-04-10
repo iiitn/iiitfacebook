@@ -1,13 +1,14 @@
 import { IAction } from "App/State/Reducers/RootReducer";
 import { IPassiveAction } from "App/PassiveAction";
 import { IUserSchema } from "Schema/User";
+import { IFileUploadResponse, IFileUpload } from "Schema/FileUpload";
 
 export interface IResponse {
 	res_id: number
 	error?: string
 	data: any
 }
-export type IResponseData = IAction | string | IPassiveAction;
+export type IResponseData = IAction | string | IPassiveAction | IFileUploadResponse;
 
 export interface IRequest {
 	req_id: number
@@ -41,4 +42,4 @@ export type IRequestAction = {
 } | {
 	type: "WALL_LIKE"
 	id: string
-}
+} | IFileUpload
