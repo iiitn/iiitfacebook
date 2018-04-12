@@ -62,7 +62,7 @@ export let UserReducer = (state=defaultState, action: IUserAction)=>{
 		case "ONLINE_UPDATE": {
 			state = {
 				...state,
-				online: action.online
+				online: action.online.filter(u=>u.id!=state.userid)
 			};
 			break;
 		}
