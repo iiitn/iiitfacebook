@@ -8,6 +8,8 @@ export interface IFileUpload {
 }
 export interface IFileUploadResponse {
 	id: string
-	done: boolean
+	done?: {
+		size: number
+	}
 }
 export const MAX_FILE_SIZE = 1024*1024*100;
