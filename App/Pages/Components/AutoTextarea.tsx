@@ -24,7 +24,6 @@ export class AutoTextarea extends React.Component<IProps, IState> {
 		this.onChange = this.onChange.bind(this);
 	}
 	keydown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-		console.log(e.keyCode, e.ctrlKey);
 		if ((e.keyCode==13) && e.ctrlKey) {
 			this.props.onCtrlEnter && this.props.onCtrlEnter(this.state.value, this);
 		}

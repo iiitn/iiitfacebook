@@ -16,7 +16,6 @@ class _Socket {
 		this.socket = connect(url);
 
 		this.socket.on("response", (response: IResponse)=>{
-			console.log("Response", response);
 			let res_id = response.res_id;
 			if (this._requests[res_id]) {
 				if (response.error) {
@@ -24,7 +23,6 @@ class _Socket {
 					this._requests[res_id].reject(response.error);
 				}
 				else {
-					//console.log("RESPONSE SUCCESS : ", response.data);
 					this._requests[res_id].resolve(response.data);
 				}
 				delete this._requests[res_id];
