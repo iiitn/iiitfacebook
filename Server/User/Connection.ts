@@ -1,8 +1,8 @@
 import * as SocketIO from 'socket.io';
-import { IRequest, IResponse, IRequestAction, IResponseData } from '../Schema/Common';
-import { MAX_FILE_SIZE } from '../Schema/FileUpload';
-import { Database } from './Database';
-import { UserSchema } from '../Schema/User';
+import { IRequest, IResponse, IRequestAction, IResponseData } from 'Schema/Common';
+import { MAX_FILE_SIZE } from 'Schema/FileUpload';
+import { Database } from 'Server/Database';
+import { UserSchema } from 'Schema/User';
 
 // 100 KB.
 export abstract class Connection {

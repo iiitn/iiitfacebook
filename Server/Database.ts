@@ -10,14 +10,14 @@ class _Database {
 			mongodb.MongoClient.connect("mongodb://127.0.0.1:27017", (err, res)=>{
 				if (err) {
 					console.log("Couldn't connect to database.");
-					return;
+					return Promise.reject("Couldn't connect to database");
 				}
 				this._database = res.db(db);
 				resolve(this._database);
 			});
 		})
 	}
-	on() {
+	onLoad() {
 		return this.promise;
 	}
 	collection(name: string) {
@@ -118,8 +118,22 @@ class Collection {
 				$addToSet: {
 					[key]: data
 				}
-			}, {
-				upsert: true
+			}).then(()=>{
+				resolve("Success.");
+			}).catch(()=>{
+				reject("Failure");
+			});
+		})
+	}
+	removeItem(find: any, key: string, data: any) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database");
+			}
+			this.collection.update(find, {
+				$pull: {
+					[key]: data
+				}
 			}).then(()=>{
 				resolve("Success.");
 			}).catch(()=>{

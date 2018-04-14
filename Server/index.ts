@@ -5,7 +5,7 @@ import * as SocketIO from 'socket.io';
 import * as fs from 'fs';
 import {Schema} from 'classui/Components/Form/Schema';
 import {UserSchema} from '../Schema/User'
-import { User } from "./User";
+import { User } from "Server/User/index";
 
 let App = express();
 let httpServer  = new http.Server(App);

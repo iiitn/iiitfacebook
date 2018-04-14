@@ -27,7 +27,7 @@ export type IRequestAction = {
 	gender: "male"|"female"
 	batch: IUserSchema["batch"]
 	branch: IUserSchema["branch"]
-	class: IUserSchema["class"]
+	cls: IUserSchema["cls"]
 } | {
 	type: "USER_LOGOUT"
 } | {
