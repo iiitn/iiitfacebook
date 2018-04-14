@@ -41,13 +41,16 @@ export class CFile {
 	resetSliceIndex() {
 		this.slice_offset = 0;
 	}
-	uploadFile(uploadStats?: (data: {id: string, percent: number})=>void) {
+	uploadFile(uploadStats?: (data: {id: string, percent: number})=>void): Promise<IFileUploadResponse> {
 		return new Promise(async (resolve, reject)=>{
 			let stats = CFile.getStats(this.file);
 			if (stats.size>=MAX_FILE_SIZE || stats.size<=0) {
 				return reject("Invalid file size. Maybe file size exceeded.");
 			}
 
+			if (this._upload.offset!=0) {
+				return reject("File upload in progress or already uploaded.");
+			}
 			this._upload = {
 				offset: 0
 			};
@@ -59,7 +62,7 @@ export class CFile {
 
 					let upload_size = (remainSize>chunkSize)?chunkSize:remainSize;
 					if (upload_size<=0) {
-						return resolve("File Successfully uploaded");
+						return reject("Cannot upload negative file size.");
 					}
 					let slice = await this.getSlice(this._upload.offset, upload_size);
 
@@ -80,6 +83,10 @@ export class CFile {
 							percent
 						});
 					}
+					if (this._upload.offset==this.file.size) {
+						return resolve(response);
+					}
+					await new Promise(resolve=>setTimeout(resolve, 500));
 				}
 				catch(e) {
 					reject("Couldn't upload file");
