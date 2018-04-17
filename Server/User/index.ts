@@ -57,7 +57,8 @@ export class User extends Connection {
 						this.broadCastOnlineList();
 						return Promise.resolve({
 							type: "USER_LOGIN",
-							userid: data._id
+							userid: data._id,
+							collegueDetails: UserInfo.getCollegueDetails(data._id)
 						} as IResponseData);
 					}
 					return Promise.reject("Login Failed.");
@@ -111,11 +112,11 @@ export class User extends Connection {
 						postedBy: user?user.name:(this.userid?this.userid:"" as string),
 						content: data.content
 					};
-					this.broadcast && this.broadcast.toClass(action) &&
+					this.broadcast && (this.broadcast.toClass(action),
 					this.broadcast.toSelf({
-						type: "ADD_POST",
+						type: "USER_WALL_ADD_ID",
 						post_id: wallid
-					});
+					}));
 					return Promise.resolve(action);
 				}).catch((msg)=>{
 					return Promise.reject(msg)
@@ -133,20 +134,15 @@ export class User extends Connection {
 	}
 	broadCastOnlineList() {
 		// Broadcast.
-
-		Database.collection("user").findAll({}, {_id: true}).then((data)=>{
-			if (!this.userid) {
-				return;
-			}
-			let users = _.map(data, "_id");
-			let online = UserInfo.getOnlineClassCollegues(this.userid);
-			this.broadcast && this.broadcast.toClass({
-				type: "ONLINE_UPDATE",
-				online: online.map(o=>({
-					name: UserInfo.getNameByID(o),
-					id: o
-				}))
-			});
+		if (!this.userid)
+			return;
+		let online = UserInfo.getOnlineCollegues(this.userid);
+		this.broadcast && this.broadcast.toClass({
+			type: "ONLINE_UPDATE",
+			online: online.map(o=>({
+				name: UserInfo.getNameByID(o),
+				id: o
+			}))
 		});
 	}
 	disconnect() {

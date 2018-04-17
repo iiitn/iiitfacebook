@@ -12,7 +12,7 @@ export class Broadcast {
 	}
 
 	toClass(data: IResponseData) {
-		let cls_users = UserInfo.getOnlineClassCollegues(this.userid);
+		let cls_users = UserInfo.getOnlineCollegues(this.userid);
 		this.passiveAction(data, cls_users);
 	}
 	toSelf(data: IResponseData) {

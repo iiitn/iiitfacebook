@@ -9,3 +9,13 @@ export let store = createStore<IRootState>(RootReducer, (window as any).__REDUX_
 export let Dispatch = _.throttle((action: IAction)=>{
 	store.dispatch(action);
 }, 100);
+
+export let StateUtils = {
+	getNameByID(id: string, name=id) {
+		let user = store.getState().user.collegueDetails[id];
+		if (user) {
+			return user.name;
+		}
+		return name;
+	}
+}

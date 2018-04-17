@@ -22,7 +22,7 @@ export let UserSchema: IJSONSchema = {
 			enum: ["CSE", "ECE", "MECHANICAL", "CHEMICAL", "MME", "CIVIL"]
 		},
 		cls: {
-			enum: [1,2,3,4,5,6]
+			enum: ["C1", "C2", "C3", "C4", "C5", "C6"]
 		},
 		gender: {
 			enum: ["male", "female"]
@@ -37,7 +37,7 @@ export interface IUserSchema {
 	password: string
 	gender: "male"|"female"
 	batch: "2008" | "2009" | "2010" | "2011" | "2012" | "2013" | "2014" | "2015"
-	cls: 1|2|3|4|5|6
+	cls: "C1" | "C2" | "C3" | "C4" | "C5" | "C6"
 	branch: "CSE" | "ECE" | "MECHANICAL" | "CHEMICAL" | "MME" | "CIVIL"
 }
 

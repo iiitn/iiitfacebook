@@ -7,7 +7,7 @@ import {AutoTextarea} from './Components/AutoTextarea';
 import { OnlineList } from "./Components/OnlineList";
 import { styled, css } from "classui/Emotion";
 import { connect } from "react-redux";
-import { IRootState, Dispatch } from "App/State";
+import { IRootState, Dispatch, StateUtils } from "App/State";
 import { Socket } from "App/Network";
 import _ = require("lodash");
 
@@ -62,8 +62,13 @@ let _Home = (props: IHomeProps)=>{
 		<NavBar logo="IIITFacebook" className={navbar} width={1024} dummy>
 			<NavbarRemain />
 			<Button to="/home">
-				Home
+			<i className="fa fa-home"  style={{paddingRight: 5}}/>Home
 			</Button>
+			{props.userid?
+			<Button>
+				<i className="fa fa-user" style={{paddingRight: 5}}/>
+				{StateUtils.getNameByID(props.userid)}
+			</Button>:undefined}
 			<Button to="/login" onClick={()=>{
 				Socket.request({
 					type: "USER_LOGOUT"
@@ -71,7 +76,7 @@ let _Home = (props: IHomeProps)=>{
 					Dispatch(action);
 				})
 			}}>
-				{props.userid?"Logout : "+props.userid:"Login"}
+				{props.userid?"Logout":"Login"}
 			</Button>
 		</NavBar>
 		<Content>
@@ -89,7 +94,6 @@ let _Home = (props: IHomeProps)=>{
 						type: "WALL_ADD",
 						content: value
 					}).then(()=>{
-						Feedback.show("Posted", "success");
 						ref.setState({
 							value: ""
 						});
