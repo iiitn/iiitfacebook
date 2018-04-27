@@ -9,8 +9,7 @@ class _Database {
 		this.promise = new Promise((resolve, reject)=>{
 			mongodb.MongoClient.connect("mongodb://127.0.0.1:27017", (err, res)=>{
 				if (err) {
-					console.log("Couldn't connect to database.");
-					return Promise.reject("Couldn't connect to database");
+					return reject("Couldn't connect to database");
 				}
 				this._database = res.db(db);
 				resolve(this._database);
@@ -25,7 +24,7 @@ class _Database {
 	}
 }
 
-class Collection {
+export class Collection {
 	collection?: mongodb.Collection<any>;
 	constructor(name: string, db?: mongodb.Db) {
 		if (db) {
@@ -49,6 +48,20 @@ class Collection {
 				resolve("Successfully inserted the document.");
 			})
 		})
+	}
+	remove(_id: string) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database.");
+			}
+			this.collection.remove({
+				_id
+			}).then((d: any)=>{
+				resolve("Successfully removed document");
+			}).catch(()=>{
+				reject("Error removing document.");
+			});
+		});
 	}
 	find(_id: string) {
 		return new Promise<any>((resolve, reject)=>{
@@ -109,13 +122,13 @@ class Collection {
 			});
 		});
 	}
-	addItem(find: any, key: string, data: any) {
+	appendItem(_id: string, key: string, data: any) {
 		return new Promise<any>((resolve, reject)=>{
 			if (!this.collection) {
 				return reject("Couldn't connect to database");
 			}
-			this.collection.update(find, {
-				$addToSet: {
+			this.collection.update({_id}, {
+				$push: {
 					[key]: data
 				}
 			}).then(()=>{
@@ -125,12 +138,49 @@ class Collection {
 			});
 		})
 	}
-	removeItem(find: any, key: string, data: any) {
+	prependItem(_id: string, key: string, data: any) {
 		return new Promise<any>((resolve, reject)=>{
 			if (!this.collection) {
 				return reject("Couldn't connect to database");
 			}
-			this.collection.update(find, {
+			this.collection.update({_id}, {
+				$push: {
+					[key]: {
+						$each: [data],
+						$position: 0
+					}
+				}
+			}).then(()=>{
+				resolve("Success.");
+			}).catch(()=>{
+				reject("Failure");
+			});
+		})
+	}
+	addItemToSet(_id: string, key: string, data: any) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database");
+			}
+			this.collection.update({_id}, {
+				$addToSet: {
+					[key]: data
+				}
+			}, {
+				upsert: true
+			}).then(()=>{
+				resolve("Success.");
+			}).catch(()=>{
+				reject("Failure");
+			});
+		})
+	}
+	removeItem(_id: string, key: string, data: any) {
+		return new Promise<any>((resolve, reject)=>{
+			if (!this.collection) {
+				return reject("Couldn't connect to database");
+			}
+			this.collection.update({_id}, {
 				$pull: {
 					[key]: data
 				}
