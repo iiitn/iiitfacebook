@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NavBar, NavbarRemain } from "classui";
-import { Button, Div, TextField, Feedback } from "classui/Components";
+import { Button, Div, TextField } from "classui/Components";
+import { Overlay } from 'classui/Overlay';
 import { Dropdown, DItem } from "classui/Components/Dropdown";
 import { Wall } from "./Components/Wall";
 import {AutoTextarea} from './Components/AutoTextarea';
@@ -81,26 +82,29 @@ let _Home = (props: IHomeProps)=>{
 		</NavBar>
 		<Content>
 			<MContent>
-				<AutoTextarea className={css`
-					padding: 10px;
-					line-height: 1.4;
-					font-family: Arial;
-					font-size: 13px;
-					width: 100%;
-					min-height: 50px;
-					border: 1px solid grey;
-				`} onCtrlEnter={(value, ref)=>{
-					Socket.request({
-						type: "WALL_ADD",
-						content: value
-					}).then(()=>{
-						ref.setState({
-							value: ""
-						});
-					}).catch((err)=>{
-						Feedback.show(err, "error");
-					})
-				}}/>
+				<div style={{textAlign: "right"}}>
+					<AutoTextarea className={css`
+						padding: 10px;
+						line-height: 1.4;
+						font-family: Arial;
+						font-size: 13px;
+						width: 100%;
+						min-height: 50px;
+						border: 1px solid grey;
+					`} onCtrlEnter={(value, ref)=>{
+						Socket.request({
+							type: "WALL_ADD",
+							content: value
+						}).then(()=>{
+							ref.setState({
+								value: ""
+							});
+						}).catch((err)=>{
+							Overlay.feedback(err, "error");
+						})
+					}}/>
+					<Button primary>Post</Button>
+				</div>
 				{props.allPosts.map(p=>{
 					return <Wall wallid={p}/>
 				})}

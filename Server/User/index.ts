@@ -12,6 +12,7 @@ import { FileUpload } from 'Server/FileUpload';
 import { UserInfo } from 'Server/User/UserInfo';
 import { Broadcast } from 'Server/User/Broadcast';
 import { userInfo } from 'os';
+import { UserActions } from 'Server/User/Actions';
 
 interface IUser {
 	name: IUserSchema["name"]
@@ -24,6 +25,7 @@ interface IUsers {
 export class User extends Connection {
 	private userid?: string;
 	private broadcast?: Broadcast;
+	private dbAction: UserActions = new UserActions("");
 
 	constructor(socket: SocketIO.Socket) {
 		super(socket);
@@ -51,27 +53,19 @@ export class User extends Connection {
 		}
 		switch(data.type) {
 			case "USER_LOGIN": {
-				return Database.collection("user").find(data._id).then((udata: IUserSchema)=>{
-					if (udata.password==data.password) {
-						this.setUserID(data._id);
-						this.broadCastOnlineList();
-						return Promise.resolve({
-							type: "USER_LOGIN",
-							userid: data._id,
-							collegueDetails: UserInfo.getCollegueDetails(data._id)
-						} as IResponseData);
-					}
-					return Promise.reject("Login Failed.");
-				}).catch(()=>Promise.reject("LOgin Failed"));
+				return UserActions.login(data).then(udata=>{
+					this.setUserID(data._id);
+					this.broadCastOnlineList();
+					this.dbAction = new UserActions(udata._id);
+					return Promise.resolve({
+						type: "USER_LOGIN",
+						userid: data._id,
+						collegueDetails: UserInfo.getCollegueDetails(data._id)
+					} as IResponseData);
+				});
 			}
 			case "USER_REGISTER": {
-				return Database.collection("user").insert(data, UserSchema)
-				.then(()=>{
-					return Database.collection("user_ctg")
-						.addItem({_id: "iiit"}, `byBatch.${data.batch}.${data.branch}.${data.cls}`, data._id)
-						.then(()=>Promise.resolve("User Successfully registered."))
-						.catch(()=>Promise.reject("Unknown error in database while registering."));
-				});
+				return UserActions.register(data);
 			}
 			case "USER_LOGOUT": {
 				this.rmSocket();
@@ -95,31 +89,20 @@ export class User extends Connection {
 		}
 		switch(data.type) {
 			case "WALL_ADD" : {
-				let wallid = v4();
-				let user = UserInfo.getUserDetails(this.userid);
-				return Database.collection("wall").insert({
-					_id: wallid,
-					postedOn: new Date().getTime(),
-					comments: [],
-					postedBy: this.userid,
-					content: data.content,
-					likes: []
-				} as IWallSchema, WallSchema).then(()=>{
+				return this.dbAction.wall_add(data.content).then((wdata)=>{
 					let action: IResponseData = {
 						type: "WALL_ADD",
-						id: wallid,
+						id: wdata._id,
 						postedOn: moment(new Date().getTime()).calendar(),
-						postedBy: user?user.name:(this.userid?this.userid:"" as string),
+						postedBy: UserInfo.getNameByID(this.userid as string),
 						content: data.content
 					};
 					this.broadcast && (this.broadcast.toClass(action),
 					this.broadcast.toSelf({
 						type: "USER_WALL_ADD_ID",
-						post_id: wallid
+						post_id: wdata._id
 					}));
 					return Promise.resolve(action);
-				}).catch((msg)=>{
-					return Promise.reject(msg)
 				});
 			}
 			case "SEND_MESSAGE": {

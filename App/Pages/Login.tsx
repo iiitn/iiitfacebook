@@ -1,12 +1,14 @@
 import * as React from "react";
 import { NavBar, NavbarRemain, ClassUI } from "classui";
-import { Button, Div, TextField, Feedback } from "classui/Components";
+import { Button, Div, TextField } from "classui/Components";
+import { Overlay } from 'classui/Overlay';
 import { Form, Checkbox, Radio, Select } from "classui/Components/Form";
 import { Submit } from 'classui/Components/Form/Submit';
 import { UserSchema } from "../../Schema/User";
 import { Socket } from "../Network";
 import { styled, css } from "classui/Emotion";
 import { Dispatch } from "App/State";
+import { CFile } from "App/libraries/CFile";
 
 let LoginPage = styled('div')`
 	max-width: 1024px;
@@ -27,22 +29,11 @@ let form = css`
 	width: 100%;
 	margin: 20px;
 	text-align: left;
-	h3 {
-		margin-bottom: 20px;
-	}
 `;
 
 export let Login = (props: any)=>{
 	return <>
-		<NavBar logo="IIITFacebook" width={1024}>
-			<NavbarRemain />
-			<Button to="/home">
-				Home
-			</Button>
-			<Button to="/login">
-				Login
-			</Button>
-		</NavBar>
+		<NavBar logo="IIITFacebook" width={1024}></NavBar>
 		<LoginPage>
 			<Div card="2" className={form}>
 				<Form onSubmit={(data: any)=>{
@@ -54,10 +45,10 @@ export let Login = (props: any)=>{
 						ClassUI.history.push("/home");
 						Dispatch(action);
 					}).catch((msg)=>{
-						Feedback.show(msg, "error");
+						Overlay.feedback(msg, "error");
 					});
 				}}>
-					<h3>Login</h3>
+					<h3 style={{marginBottom: 20}}>Login</h3>
 					<TextField name="_id">
 						University ID
 					</TextField>
@@ -73,17 +64,17 @@ export let Login = (props: any)=>{
 						type: "USER_REGISTER",
 						...data
 					}).then((msg)=>{
-						Feedback.show(msg as string, "success");
+						Overlay.feedback(msg as string, "success");
 					}).catch((msg)=>{
-						Feedback.show(msg, "error");
+						Overlay.feedback(msg, "error");
 					});
 				}}>
-					<h3>Register</h3>
+					<h3 style={{marginBottom: 20}}>Register</h3>
 					<TextField name="_id" label="University ID" />
 					<TextField name="name" label="Name"></TextField>
 					<Select label="Batch" name="batch" nonEditable options={(UserSchema as any).properties["batch"].enum}></Select>
 					<Select label="Branch" name="branch" inline width="50%" nonEditable options={(UserSchema as any).properties["branch"].enum}></Select>
-					<Select label="Class" name="class" inline width="50%" nonEditable options={(UserSchema as any).properties["class"].enum}></Select>
+					<Select label="Class" name="cls" inline width="50%" nonEditable options={(UserSchema as any).properties["cls"].enum}></Select>
 					<TextField name="password" label="Password" type="password"></TextField>
 					<Div style={{marginBottom: 10}}>
 						<Radio name="gender" inline values={[

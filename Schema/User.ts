@@ -26,6 +26,18 @@ export let UserSchema: IJSONSchema = {
 		},
 		gender: {
 			enum: ["male", "female"]
+		},
+		walls_posted: {
+			type: "array",
+			items: {
+				type: "string"
+			}
+		},
+		walls_liked: {
+			type: "array",
+			items: {
+				type: "string"
+			}
 		}
 	},
 	required: ["_id", "name", "password", "gender", "batch", "branch", "cls"]
@@ -39,6 +51,8 @@ export interface IUserSchema {
 	batch: "2008" | "2009" | "2010" | "2011" | "2012" | "2013" | "2014" | "2015"
 	cls: "C1" | "C2" | "C3" | "C4" | "C5" | "C6"
 	branch: "CSE" | "ECE" | "MECHANICAL" | "CHEMICAL" | "MME" | "CIVIL"
+	walls_posted?: string[]
+	walls_liked?: string[]
 }
 
 export interface IUserCategSchema {

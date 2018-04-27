@@ -78,7 +78,7 @@ export class _Wall extends React.Component<IProps & IWallState, IState> {
 					<span className="posted_by">{this.props.postedBy}</span>
 					<div className="time">{this.props.postedOn}</div>
 				</div>
-				<Dropdown button={<i className="fa fa-angle-double-down"></i>} btnProps={{className: "flat", style: {padding: "5px 7px"}}} push="left">
+				<Dropdown button={<i className="fa fa-angle-down"></i>} btnProps={{className: "flat", style: {padding: "5px 7px"}}} push="left">
 					<DItem>Report Abuse</DItem>
 					<DItem disable>Edit</DItem>
 					<DItem>Delete</DItem>
